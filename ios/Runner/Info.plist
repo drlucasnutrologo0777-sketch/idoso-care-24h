@@ -8,12 +8,14 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Idoso Care 24H</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSCameraUsageDescription</key>
-	<string>Usamos a câmera para enviar documentos e fotos do perfil.</string>
+	<string>Usamos a câmera para fotografar documentos de cadastro e foto de perfil do cuidador.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Usamos suas fotos para o perfil e documentação.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Usamos localização para mostrar cuidadores próximos (fase 2).</string>
+	<string>Usamos suas fotos para enviar documentos e definir a foto de perfil.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Permite salvar fotos de documentos no seu álbum, se você escolher.</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
