@@ -16,6 +16,11 @@
 	<string>Usamos suas fotos para enviar documentos e definir a foto de perfil.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Permite salvar fotos de documentos no seu álbum, se você escolher.</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

@@ -1,4 +1,4 @@
-# IDOSO CARE 24H — iOS TestFlight (mesma conta Apple do Troca Copa)
+# IDOSO CARE 24H — iOS TestFlight (app WEB via WebView, build 36+)
 # Repo: https://github.com/drlucasnutrologo0777-sketch/idoso-care-24h
 
 workflows:
@@ -30,6 +30,11 @@ workflows:
           export APP_STORE_CONNECT_PRIVATE_KEY="$(cat "$API_KEY")"
           openssl pkey -in "$API_KEY" -noout
           echo "Chave API Apple OK"
+      - name: Verificar app WEB (nao Flutter antigo)
+        script: |
+          set -e
+          bash tool/verify_web_build.sh
+          echo "Commit: $(git rev-parse --short HEAD)"
       - name: Perfil App Store (cria se nao existir)
         script: |
           set -e
@@ -59,9 +64,11 @@ workflows:
           /usr/libexec/PlistBuddy -c "Set :provisioningProfiles:com.idosocare24h.app $UUID" ios/codemagic_signing/ExportOptions.plist
           flutter build ipa --release \
             --build-name=2.0.0 \
-            --build-number=21 \
+            --build-number=36 \
             --export-options-plist=ios/codemagic_signing/ExportOptions.plist
           ls -la build/ios/ipa/
+          IPA_CHECK=$(find build/ios/ipa -name "*.ipa" | head -1)
+          bash tool/verify_web_build.sh --ipa "$IPA_CHECK"
       - name: Upload TestFlight
         script: |
           set -e
