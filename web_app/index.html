@@ -6,6 +6,8 @@
 <meta name="theme-color" content="#2E8B57"/>
 <title>Idoso Care 24H</title>
 <link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="favicon.png" type="image/png"/>
+<link rel="apple-touch-icon" href="logo.png"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -17,28 +19,25 @@
   --r:14px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{
-  height:100%;min-height:100%;min-height:-webkit-fill-available;
-  font-family:Inter,system-ui,sans-serif;background:var(--soft);color:var(--t);
+html,body{height:100%;font-family:Inter,system-ui,sans-serif;background:var(--soft);color:var(--t)}
+#app{width:100%;max-width:100%;margin:0 auto;min-height:100%;background:var(--bg);display:flex;flex-direction:column}
+@media (min-width:768px){
+  body{background:linear-gradient(160deg,#E8F5EE 0%,#F5F7FA 45%,#E3F2FD 100%)}
+  #app{max-width:820px;min-height:100vh;box-shadow:0 0 48px rgba(0,0,0,.08)}
+  .pad{padding:28px 36px 40px}
+  .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .menu-grid .menu-topic{margin-bottom:0}
+  .cuid-hero{padding:24px 28px}
 }
-#app{
-  max-width:430px;width:100%;margin:0 auto;
-  min-height:100%;min-height:100dvh;
-  background:var(--bg);display:flex;flex-direction:column;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-left:env(safe-area-inset-left,0px);
-  padding-right:env(safe-area-inset-right,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-}
-.pad{padding:24px 20px calc(32px + env(safe-area-inset-bottom,0px));flex:1}
+.pad{padding:24px 20px 32px;flex:1}
 .logo-wrap{text-align:center;padding:32px 0 24px}
 .logo{
-  width:72px;height:72px;margin:0 auto 16px;border-radius:20px;
-  background:linear-gradient(145deg,var(--p),var(--pd));
-  display:flex;align-items:center;justify-content:center;
+  width:88px;height:88px;margin:0 auto 16px;border-radius:20px;
+  overflow:hidden;
   box-shadow:0 8px 24px rgba(46,139,87,.25);
 }
-.logo svg{width:36px;height:36px;fill:#fff}
+.logo img{width:100%;height:100%;object-fit:cover;display:block}
 .brand{font-size:24px;font-weight:700;color:var(--p)}
 .brand-sub{font-size:14px;color:var(--m);margin-top:6px;line-height:1.4}
 .screen{display:none}
@@ -61,6 +60,15 @@ html,body{
 .link-row{display:flex;justify-content:space-between;align-items:center;margin:4px 0 20px;font-size:14px}
 .link-row a{color:var(--s);text-decoration:none;font-weight:500}
 .link-row a:active{opacity:.7}
+.legal-foot{margin-top:24px;font-size:12px;color:var(--m);line-height:1.5;text-align:center}
+.legal-foot a{color:var(--p);text-decoration:none;font-weight:500}
+.account-foot{margin:18px 0 8px;text-align:center;font-size:12px;color:var(--m)}
+.account-foot a{color:var(--m);text-decoration:none;border-bottom:1px dotted var(--line)}
+.account-foot a:active{opacity:.7}
+.btn-danger{background:var(--err);color:#fff}
+.btn-danger:disabled{opacity:.45;cursor:not-allowed}
+.check-row{display:flex;align-items:flex-start;gap:10px;margin:14px 0;font-size:13px;color:var(--t)}
+.check-row input{margin-top:3px;accent-color:var(--err)}
 .register-line{text-align:center;margin-top:20px;font-size:15px;color:var(--m)}
 .register-line a{color:var(--p);font-weight:600;text-decoration:none}
 .step{font-size:12px;font-weight:600;color:var(--p);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
@@ -104,7 +112,7 @@ html,body{
 .topbar button{border:none;background:var(--soft);width:40px;height:40px;border-radius:10px;cursor:pointer;font-size:18px;color:var(--p)}
 .topbar h2{font-size:17px;font-weight:600;flex:1}
 .toast{
-  position:fixed;bottom:calc(24px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
   background:#222;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;
   opacity:0;transition:opacity .3s;z-index:99;max-width:90%;text-align:center;
 }
@@ -119,7 +127,7 @@ html,body{
 .modal{display:none;position:fixed;inset:0;background:#000c;z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal.on{display:flex}
 .modal img{max-width:100%;max-height:80vh;border-radius:12px}
-.modal-close{position:absolute;top:calc(20px + env(safe-area-inset-top,0px));right:calc(20px + env(safe-area-inset-right,0px));background:#fff;border:none;width:40px;height:40px;border-radius:50%;font-size:20px;cursor:pointer}
+.modal-close{position:absolute;top:20px;right:20px;background:#fff;border:none;width:40px;height:40px;border-radius:50%;font-size:20px;cursor:pointer}
 .role-card{
   display:flex;align-items:center;gap:14px;padding:18px;border:2px solid var(--line);
   border-radius:16px;margin-bottom:12px;cursor:pointer;background:var(--bg);text-align:left;width:100%;
@@ -133,14 +141,11 @@ html,body{
 .btn-o{background:transparent;color:var(--s);border:2px solid var(--s)}
 .btn-g{background:var(--soft);color:var(--t);border:1px solid var(--line)}
 .nav-login{
-  position:fixed;bottom:calc(12px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);
+  position:fixed;bottom:12px;left:50%;transform:translateX(-50%);
   z-index:50;background:#fff;border:1px solid var(--line);border-radius:999px;
   padding:8px 16px;font-size:13px;font-weight:600;color:var(--p);cursor:pointer;
   box-shadow:0 4px 12px rgba(0,0,0,.08);font-family:inherit;
 }
-.ver-badge{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:calc(10px + env(safe-area-inset-right,0px));z-index:60;background:var(--p);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;opacity:.92}
-.pix-box{text-align:center;background:var(--pl);border:1px solid var(--line);border-radius:16px;padding:20px;margin:16px 0}
-.pix-box canvas{border-radius:12px;background:#fff;margin:12px auto;display:block}
 .chat-msgs{flex:1;overflow-y:auto;padding:12px 0;min-height:280px;max-height:50vh}
 .chat-msg{max-width:85%;padding:10px 14px;border-radius:14px;margin-bottom:8px;font-size:14px;line-height:1.4}
 .chat-msg.me{margin-left:auto;background:var(--p);color:#fff;border-bottom-right-radius:4px}
@@ -193,7 +198,6 @@ html,body{
 </style>
 </head>
 <body>
-<div class="ver-badge">Build 36 · Web</div>
 <div id="app">
 
   <!-- ========== BOAS-VINDAS ========== -->
@@ -201,13 +205,14 @@ html,body{
     <div class="pad">
       <div class="logo-wrap">
         <div class="logo">
-          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <img src="logo.png" alt="Idoso Care 24H" width="88" height="88"/>
         </div>
         <div class="brand">Idoso Care 24H</div>
         <p class="brand-sub">Cuidadores de idosos com segurança e confiança</p>
       </div>
       <button class="btn btn-p" type="button" onclick="irLogin()">Entrar</button>
       <button class="btn btn-o" type="button" style="margin-top:12px" onclick="irEscolhaPerfil()">Criar conta</button>
+      <p class="legal-foot">Ao continuar, você concorda com os <a href="https://idoso-care-24h.web.app/termos.html" target="_blank" rel="noopener">Termos de Uso</a> e a <a href="https://idoso-care-24h.web.app/privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>. <a href="https://idoso-care-24h.web.app/exclusao-conta.html" target="_blank" rel="noopener">Excluir conta</a></p>
     </div>
   </section>
 
@@ -226,7 +231,7 @@ html,body{
 
       <div class="link-row">
         <span></span>
-        <a href="#" onclick="toast('Recuperação por e-mail');return false">Esqueceu a senha?</a>
+        <a href="#" onclick="esqueciSenha();return false">Esqueceu a senha?</a>
       </div>
 
       <button class="btn btn-p" type="button" onclick="entrar()">Entrar</button>
@@ -336,11 +341,11 @@ html,body{
       <label class="lbl">Sobre mim</label>
       <textarea class="inp" id="cuid-bio" rows="4" style="height:auto;padding:12px 14px" placeholder="Ex.: 8 anos de experiência, plantões diurnos e 12x36…"></textarea>
 
-      <label class="lbl">Foto de perfil (opcional)</label>
+      <label class="lbl">Foto de perfil (obrigatória)</label>
       <div class="photo-pick" id="etapa2-foto-box" style="width:100px;height:100px;margin:0 0 16px;position:relative" onclick="document.getElementById('etapa2-foto-inp').click()">
         <img id="etapa2-foto-preview" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%"/>
         <span id="etapa2-foto-txt">📷 Toque para enviar foto</span>
-        <input type="file" id="etapa2-foto-inp" accept="image/*" capture="user" style="position:absolute;inset:0;opacity:0;cursor:pointer" onchange="fotoPerfilEtapa2(this)"/>
+        <input type="file" id="etapa2-foto-inp" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer" onchange="fotoPerfilEtapa2(this)"/>
       </div>
 
       <label class="lbl">Especialidades</label>
@@ -350,7 +355,7 @@ html,body{
       </div>
       <div id="cuid-spec-chips" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px"></div>
 
-      <button class="btn btn-p" type="button" onclick="irCuidadorEtapa3()">Continuar — Valores</button>
+      <button class="btn btn-p" type="button" onclick="irCuidadorEtapa3()">Continuar — Finalizar cadastro</button>
     </div>
   </section>
 
@@ -361,16 +366,14 @@ html,body{
       <h2>Cadastro Cuidador</h2>
     </div>
     <div class="pad">
-      <p class="step">Etapa 3 de 3 — Valores</p>
+      <p class="step">Etapa 3 de 3 — Pronto</p>
       <div class="progress"><i class="done"></i><i class="done"></i><i class="done"></i></div>
-      <h1 class="h1">Quanto você cobra?</h1>
-      <p class="hint">Famílias verão estes valores no seu perfil após aprovação.</p>
+      <h1 class="h1">Quase lá!</h1>
+      <p class="hint">O valor da diária você define ao publicar <strong>agenda</strong> ou <strong>plantão</strong> no painel — pode alterar quando quiser.</p>
 
-      <label class="lbl">Valor por hora (R$)</label>
-      <input class="inp" id="cuid-hour" type="number" step="0.01" placeholder="Ex.: 35"/>
-
-      <label class="lbl">Valor por dia / diária (R$)</label>
-      <input class="inp" id="cuid-daily" type="number" step="0.01" placeholder="Ex.: 220"/>
+      <div class="note" style="margin-top:12px">
+        <strong>Taxa do app:</strong> <strong>R$ 10,29</strong> (US$ 1,99) <strong>por diária</strong> — ao publicar disponibilidade mostramos automaticamente <strong>diária + taxa/dia</strong> como referência.
+      </div>
 
       <div class="note" style="margin-top:8px">Seu perfil será analisado pela equipe antes de aparecer para famílias.</div>
 
@@ -448,7 +451,7 @@ html,body{
         <img id="fotoPreview" alt="" style="display:none"/>
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2E8B57" stroke-width="2" id="fotoIcon"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
         <span id="fotoTxt">Toque para<br/>foto do perfil</span>
-        <input type="file" accept="image/*" capture="environment" onchange="fotoPerfil(this)"/>
+        <input type="file" accept="image/*" onchange="fotoPerfil(this)"/>
       </label>
 
       <label class="lbl">Nome completo</label>
@@ -546,91 +549,77 @@ html,body{
         <div class="ic">🪪</div>
         <div><b>RG — Registro Geral</b><small>Frente e verso (se aplicável)</small></div>
         <span class="ok">✓</span>
-        <input type="file" accept="image/*" capture="environment" onchange="anexar(this)"/>
+        <input type="file" accept="image/*" onchange="anexar(this)"/>
       </div>
 
       <div class="doc" data-doc="cpf">
         <div class="ic">📋</div>
         <div><b>CPF</b><small>Documento ou cartão do CPF</small></div>
         <span class="ok">✓</span>
-        <input type="file" accept="image/*" capture="environment" onchange="anexar(this)"/>
+        <input type="file" accept="image/*" onchange="anexar(this)"/>
       </div>
 
       <div class="doc" data-doc="comprovante">
         <div class="ic">🏠</div>
         <div><b>Comprovante de endereço</b><small>Conta de luz, água ou telefone (até 90 dias)</small></div>
         <span class="ok">✓</span>
-        <input type="file" accept="image/*" capture="environment" onchange="anexar(this)"/>
+        <input type="file" accept="image/*" onchange="anexar(this)"/>
       </div>
 
       <div class="doc" data-doc="ctps">
         <div class="ic">💼</div>
         <div><b>Carteira de Trabalho</b><small>Página de identificação e contrato atual</small></div>
         <span class="ok">✓</span>
-        <input type="file" accept="image/*" capture="environment" onchange="anexar(this)"/>
+        <input type="file" accept="image/*" onchange="anexar(this)"/>
+      </div>
+
+      <div class="doc" data-doc="diploma">
+        <div class="ic">🎓</div>
+        <div><b>Diploma / Certificado de formação</b><small>Curso de cuidador, técnico ou graduação</small></div>
+        <span class="ok">✓</span>
+        <input type="file" accept="image/*" onchange="anexar(this)"/>
       </div>
 
       <div class="doc" data-doc="antecedentes">
         <div class="ic">🛡️</div>
         <div><b>Certidão de antecedentes criminais</b><small>Emitida nos últimos 90 dias</small></div>
         <span class="ok">✓</span>
-        <input type="file" accept="image/*" capture="environment" onchange="anexar(this)"/>
-      </div>
-
-      <div class="note" style="margin-top:16px;margin-bottom:12px">
-        <strong>Formação e experiência — 3 situações:</strong><br>
-        1) Tem <em>curso de cuidador</em> → anexe só no bloco abaixo.<br>
-        2) Tem <em>curso de cuidador e diploma de enfermagem</em> → anexe nos <strong>dois blocos separados</strong> (não no mesmo lugar).<br>
-        3) Só tem <em>experiência</em>, sem curso → não anexe certificado; preencha o texto de experiência.
+        <input type="file" accept="image/*" onchange="anexar(this)"/>
       </div>
 
       <div class="doc" data-doc="curso">
         <div class="ic">📜</div>
-        <div><b>Certificado — Curso de Cuidador de Idosos</b><small>Somente o certificado do curso de cuidador (primeiros socorros, medicação, etc.)</small></div>
+        <div><b>Certificado — Curso de Cuidador de Idosos</b><small>Primeiros socorros, medicação, etc.</small></div>
         <span class="ok">✓</span>
-        <input type="file" accept="image/*" capture="environment" onchange="anexar(this)"/>
-      </div>
-
-      <div class="note" style="margin-top:8px;margin-bottom:12px">
-        <strong>Não possui curso de cuidador?</strong> Descreva abaixo seu tempo de experiência (obrigatório se não anexar o certificado acima).
-      </div>
-      <label class="lbl" for="curso-exp-texto">Tempo de experiência (se não tiver curso)</label>
-      <textarea class="inp" id="curso-exp-texto" rows="3" placeholder="Ex.: 5 anos cuidando idosos em domicílio, experiência com Alzheimer, medicação oral, banho e alimentação..."></textarea>
-      <button class="btn btn-o" type="button" style="margin-top:8px;height:40px" onclick="salvarExperienciaCurso()">Salvar descrição de experiência</button>
-
-      <div class="doc" data-doc="diploma">
-        <div class="ic">🎓</div>
-        <div><b>Diploma de enfermagem (opcional)</b><small>Técnico de enfermagem, auxiliar ou superior completo — anexe aqui se tiver; se não tiver, não precisa</small></div>
-        <span class="ok">✓</span>
-        <input type="file" accept="image/*" capture="environment" onchange="anexar(this)"/>
+        <input type="file" accept="image/*" onchange="anexar(this)"/>
       </div>
 
       <div class="doc" data-doc="inss">
         <div class="ic">🔢</div>
         <div><b>Número do INSS / PIS</b><small>Cartão ou extrato</small></div>
         <span class="ok">✓</span>
-        <input type="file" accept="image/*" capture="environment" onchange="anexar(this)"/>
+        <input type="file" accept="image/*" onchange="anexar(this)"/>
       </div>
 
       <div class="doc" data-doc="titulo">
         <div class="ic">🗳️</div>
         <div><b>Título de eleitor</b><small>Opcional, se disponível</small></div>
         <span class="ok">✓</span>
-        <input type="file" accept="image/*" capture="environment" onchange="anexar(this)"/>
+        <input type="file" accept="image/*" onchange="anexar(this)"/>
       </div>
 
       <div class="doc" data-doc="reservista">
         <div class="ic">⚔️</div>
         <div><b>Certificado de reservista</b><small>Quando aplicável</small></div>
         <span class="ok">✓</span>
-        <input type="file" accept="image/*" capture="environment" onchange="anexar(this)"/>
+        <input type="file" accept="image/*" onchange="anexar(this)"/>
       </div>
 
       <div class="doc" data-doc="referencia">
         <div class="ic">📞</div>
         <div><b>Comprovante de experiência / referência</b><small>Declaração ou contracheque anterior</small></div>
         <span class="ok">✓</span>
-        <input type="file" accept="image/*" capture="environment" onchange="anexar(this)"/>
+        <input type="file" accept="image/*" onchange="anexar(this)"/>
       </div>
 
       <button class="btn btn-p" type="button" style="margin-top:16px" onclick="finalizar()">Enviar cadastro para análise</button>
@@ -682,8 +671,8 @@ html,body{
         <div class="gal-item" onclick="verFoto('Referência')"><div class="ph">📄<br/>Experiência</div></div>
       </div>
 
-      <button class="btn btn-p" type="button" onclick="solicitarMatch()">Dar match / Solicitar contratação</button>
-      <p class="hint" style="margin-top:12px;text-align:center;font-size:12px">Revise currículo e todas as fotos acima antes de confirmar.</p>
+      <button class="btn btn-p" type="button" onclick="abrirChatNegocio()">Abrir chat</button>
+      <p class="hint" style="margin-top:12px;text-align:center;font-size:12px">Chat liberado somente após fechar negócio em Minhas ofertas.</p>
     </div>
   </section>
 
@@ -716,6 +705,11 @@ html,body{
       <button type="button" class="menu-topic" onclick="show('familia-ofertas')">
         <span class="menu-ic">📋</span>
         <div><b>Minhas ofertas de serviço</b><small>Diária, semanal, quinzenal — propostas dos cuidadores</small></div>
+        <span class="menu-arr">›</span>
+      </button>
+      <button type="button" class="menu-topic" onclick="abrirChatNegocio()">
+        <span class="menu-ic">💬</span>
+        <div><b>Chat com cuidador</b><small>Liberado após fechar negócio</small></div>
         <span class="menu-arr">›</span>
       </button>
       <button type="button" class="menu-topic" onclick="show('familia-ponto')">
@@ -763,6 +757,7 @@ html,body{
         <div><b>Denunciar cuidador</b><small>Canal formal + órgãos de proteção</small></div>
         <span class="menu-arr">›</span>
       </button>
+      <p class="account-foot"><a href="#" onclick="abrirExclusaoConta('familia-painel');return false">Privacidade · excluir conta</a></p>
     </div>
   </section>
 
@@ -771,6 +766,30 @@ html,body{
     <div class="pad">
       <p class="hint">Cuidadores com <strong>plantão hoje</strong> ativo — cruzamento com disponibilidade publicada.</p>
       <div id="fam-proximos-list"></div>
+    </div>
+  </section>
+
+  <section class="screen" id="familia-cuidador-perfil">
+    <div class="topbar"><button type="button" onclick="show('familia-proximos')">←</button><h2>Perfil do cuidador</h2></div>
+    <div class="pad" id="fam-cuidador-perfil-box"><p class="hint">Carregando…</p></div>
+  </section>
+
+  <section class="screen" id="familia-cuidador-proposta">
+    <div class="topbar"><button type="button" onclick="show(window._propostaVoltar||'familia-proximos')">←</button><h2>Oferecer proposta</h2></div>
+    <div class="pad">
+      <input type="hidden" id="proposta-cuid-id"/>
+      <p class="hint" id="proposta-cuid-nome"></p>
+      <label class="lbl">Valor diária (R$)</label>
+      <input class="inp" id="proposta-valor" type="number" placeholder="Ex.: 250"/>
+      <label class="lbl">Tipo de cuidado / idoso</label>
+      <input class="inp" id="proposta-idoso" placeholder="Ex.: Idoso 82a, Alzheimer"/>
+      <label class="lbl">Necessidades</label>
+      <input class="inp" id="proposta-necessidades" placeholder="Medicação, banho…"/>
+      <label class="lbl">Duração (dias)</label>
+      <input class="inp" id="proposta-duracao" type="number" value="15" min="1"/>
+      <label class="lbl">Mensagem</label>
+      <input class="inp" id="proposta-msg" placeholder="Ex.: Posso iniciar segunda-feira"/>
+      <button class="btn btn-p" type="button" onclick="enviarPropostaCuidador()">Enviar proposta</button>
     </div>
   </section>
 
@@ -799,6 +818,7 @@ html,body{
     <div class="topbar"><button type="button" onclick="show('familia-painel')">←</button><h2>Minhas ofertas</h2></div>
     <div class="pad">
       <p class="hint">Propostas dos cuidadores: aceitar, recusar ou negociar.</p>
+      <div id="fam-notificacoes-list"></div>
       <div id="fam-ofertas-list"></div>
       <button class="btn btn-o" type="button" style="margin-top:12px" onclick="show('familia-urgente')">+ Nova oferta de serviço</button>
     </div>
@@ -825,7 +845,7 @@ html,body{
     <div class="pad">
       <p class="step">Cuidados anteriores</p>
       <div id="fam-historico-list"></div>
-      <p class="step" style="margin-top:16px">Pagamentos</p>
+      <p class="step" style="margin-top:16px">Diárias e cobranças</p>
       <div id="fam-pagamentos-list"></div>
     </div>
   </section>
@@ -884,9 +904,9 @@ html,body{
       <label class="lbl">Mensagem</label>
       <textarea class="inp" id="contato-msg" rows="4" style="height:auto;padding:12px"></textarea>
       <button class="btn btn-p" type="button" onclick="enviarFaleConosco()">Enviar</button>
+      <p class="account-foot"><a href="#" onclick="abrirExclusaoConta('familia-painel');return false">Privacidade · excluir conta</a></p>
     </div>
   </section>
-
   <section class="screen" id="familia-denunciar">
     <div class="topbar"><button type="button" onclick="show('familia-painel')">←</button><h2>Denunciar cuidador</h2></div>
     <div class="pad">
@@ -899,23 +919,29 @@ html,body{
     </div>
   </section>
 
-  <!-- ========== PIX — liberar chat (R$ 0,50) ========== -->
-  <section class="screen" id="pix-pay">
+  <section class="screen" id="conta-excluir">
     <div class="topbar">
-      <button type="button" onclick="voltarDePesquisa()">←</button>
-      <h2>PIX para liberar chat</h2>
+      <button type="button" onclick="show(window._contaVoltar||'familia-painel')">←</button>
+      <h2>Excluir conta</h2>
     </div>
     <div class="pad">
-      <p class="hint">Pague R$ 0,50 via PIX para iniciar a conversa com o cuidador após o match.</p>
-      <div class="pix-box">
-        <canvas id="pixQrCanvas"></canvas>
-        <p style="font-size:13px;color:var(--m);margin-top:8px"><span>Beneficiário</span>: <strong id="pixName">Eder Lucas Santos Tiago</strong></p>
-        <p style="font-size:13px;color:var(--m)"><span>Chave PIX (telefone)</span>: <strong id="pixKey">11968362005</strong></p>
-        <p style="font-size:15px;font-weight:700;color:var(--p);margin-top:8px"><span>Valor</span>: <span id="pixAmount">R$ 0,50</span></p>
+      <div class="warn">
+        <strong>Exclusão permanente.</strong> Sua conta, perfil, documentos, chats e dados pessoais serão apagados dos nossos servidores. Esta ação <strong>não pode ser desfeita</strong>.
       </div>
-      <button class="btn btn-o" type="button" onclick="copiarPixChave()">Copiar chave PIX</button>
-      <button class="btn btn-g" type="button" style="margin-top:8px" onclick="copiarPixCodigo()">Copiar código PIX</button>
-      <button class="btn btn-p" type="button" style="margin-top:12px" onclick="confirmarPix()">Já paguei — liberar chat</button>
+      <p class="hint">Serão removidos: cadastro, currículo, ofertas, mensagens, tickets de suporte e arquivos enviados. Registros financeiros já concluídos podem ser mantidos de forma anonimizada por obrigação legal.</p>
+      <label class="lbl" for="excluir-senha">Confirme com sua senha</label>
+      <input class="inp" id="excluir-senha" type="password" placeholder="Senha atual" autocomplete="current-password"/>
+      <label class="check-row">
+        <input type="checkbox" id="excluir-confirm" onchange="atualizarBtnExcluir()"/>
+        <span>Entendo que a exclusão é <strong>permanente</strong> e desejo apagar minha conta.</span>
+      </label>
+      <button class="btn btn-danger" type="button" id="btnExcluirConta" disabled onclick="confirmarExcluirConta()">Apagar conta permanentemente</button>
+      <button class="btn btn-o" type="button" style="margin-top:10px" onclick="sairConta()">Sair da conta (sem apagar)</button>
+      <p class="account-foot" style="margin-top:20px">
+        <a href="https://idoso-care-24h.web.app/privacidade.html" target="_blank" rel="noopener">Política de privacidade</a>
+        ·
+        <a href="https://idoso-care-24h.web.app/termos.html" target="_blank" rel="noopener">Termos de uso</a>
+      </p>
     </div>
   </section>
 
@@ -926,7 +952,7 @@ html,body{
       <h2>Chat do match</h2>
     </div>
     <div class="pad" style="display:flex;flex-direction:column;min-height:70vh">
-      <div class="note" id="chatLockNote">Chat bloqueado — conclua o pagamento PIX.</div>
+      <div class="note" id="chatLockNote">Chat bloqueado — feche o negócio com o cuidador em Minhas ofertas para conversar.</div>
       <div class="chat-msgs" id="chatMsgs"></div>
       <div class="chat-bar">
         <input class="inp" id="chatInput" placeholder="Digite sua mensagem..." style="margin:0"/>
@@ -953,7 +979,9 @@ html,body{
           </div>
         </div>
       </div>
+      <div id="cuid-notificacoes" style="display:none;margin-bottom:12px"></div>
 
+      <div class="menu-grid">
       <button type="button" class="menu-topic" onclick="show('cuidador-curriculo')">
         <span class="menu-ic">📋</span>
         <div><b>Currículo Lates</b><small>Dados, certificados e formação — enviar ao contratante</small></div>
@@ -964,9 +992,19 @@ html,body{
         <div><b>Recomendações</b><small>Avaliações positivas — relatório para o contratante</small></div>
         <span class="menu-arr">›</span>
       </button>
-      <button type="button" class="menu-topic" onclick="show('cuidador-agenda')">
+      <button type="button" class="menu-topic" onclick="show('cuidador-minhas-agendas')">
+        <span class="menu-ic">📋</span>
+        <div><b>Minhas agendas</b><small>Alterar dias, valores, quinzena/mês ou remover</small></div>
+        <span class="menu-arr">›</span>
+      </button>
+      <button type="button" class="menu-topic" onclick="show('cuidador-meus-plantoes')">
+        <span class="menu-ic">📌</span>
+        <div><b>Meus plantões</b><small>Editar plantão publicado ou desativar</small></div>
+        <span class="menu-arr">›</span>
+      </button>
+      <button type="button" class="menu-topic" onclick="novaAgendaForm()">
         <span class="menu-ic">📅</span>
-        <div><b>Disponibilizar agenda</b><small>Dias, horários 07h/19h, escalas 4–48h, viagem e raio km</small></div>
+        <div><b>Disponibilizar agenda</b><small>Nova agenda — dias, horários e valor da diária</small></div>
         <span class="menu-arr">›</span>
       </button>
       <button type="button" class="menu-topic" onclick="show('cuidador-ponto')">
@@ -984,9 +1022,14 @@ html,body{
         <div><b>Ofertas de serviço</b><small>Plantões urgentes hoje e outras oportunidades</small></div>
         <span class="menu-arr">›</span>
       </button>
-      <button type="button" class="menu-topic" onclick="show('cuidador-plantao-hoje')">
+      <button type="button" class="menu-topic" onclick="abrirChatNegocio()">
+        <span class="menu-ic">💬</span>
+        <div><b>Chat com contratante</b><small>Liberado após fechar negócio</small></div>
+        <span class="menu-arr">›</span>
+      </button>
+      <button type="button" class="menu-topic" onclick="novoPlantaoForm()">
         <span class="menu-ic">✅</span>
-        <div><b>Oferecer plantão hoje</b><small>Aparece em “cuidadores disponíveis próximos” da família</small></div>
+        <div><b>Oferecer plantão hoje</b><small>Valor da diária + referência com taxa do app</small></div>
         <span class="menu-arr">›</span>
       </button>
       <button type="button" class="menu-topic" onclick="show('cuidador-faturamento')">
@@ -996,7 +1039,7 @@ html,body{
       </button>
       <button type="button" class="menu-topic" onclick="show('cuidador-taxa')">
         <span class="menu-ic">📊</span>
-        <div><b>Taxa do app (7%)</b><small>Manutenção da plataforma sobre serviços adquiridos</small></div>
+        <div><b>Taxa do app (US$ 1,99)</b><small>R$ 10,29 por negócio — pague após receber a diária</small></div>
         <span class="menu-arr">›</span>
       </button>
       <button type="button" class="menu-topic" onclick="show('cuidador-historico')">
@@ -1009,6 +1052,8 @@ html,body{
         <div><b>Denunciar maus-tratos</b><small>Disque Denúncia e Conselho da Pessoa Idosa</small></div>
         <span class="menu-arr">›</span>
       </button>
+      </div>
+      <p class="account-foot"><a href="#" onclick="abrirExclusaoConta('cuidador-painel');return false">Privacidade · excluir conta</a></p>
     </div>
   </section>
 
@@ -1024,7 +1069,7 @@ html,body{
       <div class="photo-pick" id="cuid-foto-box" style="width:100px;height:100px;margin:0 0 16px;position:relative" onclick="document.getElementById('cuid-foto-inp').click()">
         <img id="cuid-foto-preview" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%"/>
         <span id="cuid-foto-txt">📷 Toque para enviar foto</span>
-        <input type="file" id="cuid-foto-inp" accept="image/*" capture="environment" style="position:absolute;inset:0;opacity:0;cursor:pointer" onchange="fotoPerfilPainel(this)"/>
+        <input type="file" id="cuid-foto-inp" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer" onchange="fotoPerfilPainel(this)"/>
       </div>
       <label class="lbl">CPF</label>
       <input class="inp" id="cuid-cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCpf(this)"/>
@@ -1037,11 +1082,9 @@ html,body{
       <p class="lbl" style="margin-top:14px">Classificação automática</p>
       <div class="cv" id="cuid-classificacao-box">—</div>
       <p class="step" style="margin-top:16px">Enviar fotos dos documentos</p>
-      <p class="hint">Cada foto vai para o Firebase Storage e atualiza sua classificação. Sem curso de cuidador? Descreva sua experiência abaixo.</p>
+      <p class="hint">Cada foto vai para o Firebase Storage e atualiza sua classificação.</p>
       <div id="cuid-docs-upload"></div>
-      <label class="lbl" for="curso-exp-texto-cv" style="margin-top:12px">Tempo de experiência (se não tiver curso de cuidador)</label>
-      <textarea class="inp" id="curso-exp-texto-cv" rows="3" placeholder="Descreva quanto tempo e que tipo de experiência você tem cuidando idosos..."></textarea>
-      <button class="btn btn-o" type="button" style="margin-top:8px;height:40px" onclick="salvarExperienciaCurso()">Salvar descrição de experiência</button>
+      <p class="hint" style="margin-top:8px">Toque em um documento pendente para enviar foto (JPG/PNG).</p>
       <button class="btn btn-o" type="button" style="margin-top:12px" onclick="abrirDocumentosCompleto('cuidador-curriculo')">Abrir tela completa de documentos</button>
       <button class="btn btn-s" type="button" style="margin-top:12px" onclick="baixarCurriculoCadastro()">⬇ Baixar meu cadastro (currículo)</button>
       <button class="btn btn-p" type="button" style="margin-top:12px" onclick="salvarCpfEClassificar()">Salvar CPF e atualizar classificação</button>
@@ -1101,6 +1144,21 @@ html,body{
         <button type="button" class="chip" data-v="48" onclick="selChip(this,'agenda-escala')">48 h</button>
       </div>
       <div class="note">Escala de <strong>8 horas</strong> = horário comercial (seg–sex, 8h–18h).</div>
+      <p class="step" style="margin-top:16px">Valor da diária por escala (R$)</p>
+      <p class="hint">Informe quanto cobra em cada duração. Ex.: 8h = R$ 200, 12h = R$ 260. A taxa do app é <strong>R$ 10,29 por diária</strong> (US$ 1,99).</p>
+      <div class="row2" style="margin-bottom:8px">
+        <div><label class="lbl" style="font-size:11px">4 h</label><input class="inp" id="agenda-rate-4" type="number" min="0" step="1" placeholder="R$" style="margin:0" oninput="atualizarResumoTaxaAgenda()"/></div>
+        <div><label class="lbl" style="font-size:11px">6 h</label><input class="inp" id="agenda-rate-6" type="number" min="0" step="1" placeholder="R$" style="margin:0" oninput="atualizarResumoTaxaAgenda()"/></div>
+      </div>
+      <div class="row2" style="margin-bottom:8px">
+        <div><label class="lbl" style="font-size:11px">8 h</label><input class="inp" id="agenda-rate-8" type="number" min="0" step="1" placeholder="R$" style="margin:0" oninput="atualizarResumoTaxaAgenda()"/></div>
+        <div><label class="lbl" style="font-size:11px">12 h</label><input class="inp" id="agenda-rate-12" type="number" min="0" step="1" placeholder="R$" style="margin:0" oninput="atualizarResumoTaxaAgenda()"/></div>
+      </div>
+      <div class="row2" style="margin-bottom:8px">
+        <div><label class="lbl" style="font-size:11px">24 h</label><input class="inp" id="agenda-rate-24" type="number" min="0" step="1" placeholder="R$" style="margin:0" oninput="atualizarResumoTaxaAgenda()"/></div>
+        <div><label class="lbl" style="font-size:11px">48 h</label><input class="inp" id="agenda-rate-48" type="number" min="0" step="1" placeholder="R$" style="margin:0" oninput="atualizarResumoTaxaAgenda()"/></div>
+      </div>
+      <div class="note" id="agenda-taxa-resumo">Informe ao menos um valor para ver diária + taxa.</div>
       <div class="toggle-row">
         <span><b>Disponível para viajar</b><br/><small style="color:var(--m)">Aceita plantões fora da cidade</small></span>
         <input type="checkbox" id="agenda-viagem"/>
@@ -1118,7 +1176,30 @@ html,body{
         <div><label class="lbl" style="font-size:11px">Hora entrada</label><input class="inp" id="agenda-hora-entrada" type="time" value="07:00"/></div>
         <div><label class="lbl" style="font-size:11px">Hora saída</label><input class="inp" id="agenda-hora-saida" type="time" value="19:00"/></div>
       </div>
-      <button class="btn btn-p" type="button" onclick="salvarAgenda()">Salvar agenda</button>
+      <button class="btn btn-p" type="button" onclick="salvarAgenda()">Publicar agenda</button>
+      <button class="btn btn-o" type="button" style="margin-top:8px" onclick="show('cuidador-minhas-agendas')">Ver minhas agendas</button>
+      <p class="step" style="margin-top:20px">Como você prefere receber</p>
+      <p class="hint">Mesma preferência usada ao aceitar ofertas (também configurável em Plantão hoje).</p>
+      <div class="chip-row" id="agenda-pag-freq">
+        <button type="button" class="chip on" data-v="diaria" onclick="selChip(this,'agenda-pag-freq');toggleAgendaPagSemanal()">Diária</button>
+        <button type="button" class="chip" data-v="semanal" onclick="selChip(this,'agenda-pag-freq');toggleAgendaPagSemanal()">Semanal</button>
+        <button type="button" class="chip" data-v="quinzenal" onclick="selChip(this,'agenda-pag-freq');toggleAgendaPagSemanal()">Quinzenal</button>
+      </div>
+      <div id="agenda-pag-dia-semana" style="display:none;margin-top:8px">
+        <label class="lbl">Dia da semana</label>
+        <div class="chip-row" id="agenda-pag-dia">
+          <button type="button" class="chip on" data-v="seg" onclick="selChip(this,'agenda-pag-dia')">Seg</button>
+          <button type="button" class="chip" data-v="ter" onclick="selChip(this,'agenda-pag-dia')">Ter</button>
+          <button type="button" class="chip" data-v="qua" onclick="selChip(this,'agenda-pag-dia')">Qua</button>
+          <button type="button" class="chip" data-v="qui" onclick="selChip(this,'agenda-pag-dia')">Qui</button>
+          <button type="button" class="chip" data-v="sex" onclick="selChip(this,'agenda-pag-dia')">Sex</button>
+          <button type="button" class="chip" data-v="sab" onclick="selChip(this,'agenda-pag-dia')">Sáb</button>
+          <button type="button" class="chip" data-v="dom" onclick="selChip(this,'agenda-pag-dia')">Dom</button>
+        </div>
+      </div>
+      <label class="lbl">Duração típica (dias)</label>
+      <input class="inp" id="agenda-duracao-dias" type="number" min="1" value="15" oninput="atualizarResumoTaxaAgenda()"/>
+      <button class="btn btn-o" type="button" style="margin-top:8px" onclick="salvarPreferenciasRecebimento()">Salvar forma de recebimento</button>
     </div>
   </section>
 
@@ -1180,13 +1261,50 @@ html,body{
       <div id="oferta-acao-box" style="display:none;margin-top:12px" class="cv">
         <p class="lbl" id="oferta-acao-titulo">Responder oferta</p>
         <input type="hidden" id="oferta-acao-id"/>
-        <label class="lbl">Contra-proposta diária (R$) — opcional</label>
-        <input class="inp" id="oferta-contra-valor" type="number" placeholder="Deixe vazio para aceitar valor da família"/>
-        <label class="lbl">Mensagem</label>
-        <input class="inp" id="oferta-contra-msg" placeholder="Ex.: Posso iniciar às 19h"/>
-        <button class="btn btn-p" type="button" onclick="aceitarOfertaCuidador()">Aceitar oferta</button>
-        <button class="btn btn-o" type="button" style="margin-top:8px" onclick="contraOfertaCuidador()">Enviar nova proposta</button>
-        <button class="btn btn-g" type="button" style="margin-top:8px;background:#fef2f2;color:var(--err);border:1px solid #fecaca" onclick="recusarOfertaCuidador()">Recusar oferta</button>
+        <input type="hidden" id="oferta-resposta-id"/>
+
+        <div id="oferta-passo1">
+          <p class="hint">Aceite ou envie contra-proposta de valor. Sua forma de recebimento cadastrada em <strong>Oferecer plantão hoje</strong> será aplicada automaticamente.</p>
+          <label class="lbl">Contra-proposta diária (R$) — opcional</label>
+          <input class="inp" id="oferta-contra-valor" type="number" placeholder="Deixe vazio para aceitar o valor da família" oninput="atualizarAvisoTaxaOferta()"/>
+          <p class="hint" id="aviso-taxa-oferta" style="margin-top:-6px;margin-bottom:10px">Taxa de manutenção: <strong>R$ 10,29/dia</strong> (US$ 1,99/dia) — multiplicada pelo número de diárias do trabalho.</p>
+          <label class="lbl">Mensagem</label>
+          <input class="inp" id="oferta-contra-msg" placeholder="Ex.: Posso iniciar às 19h"/>
+          <button class="btn btn-p" type="button" style="margin-top:12px" onclick="aceitarOfertaCuidador()">Aceitar oferta</button>
+          <button class="btn btn-o" type="button" style="margin-top:8px" onclick="contraOfertaCuidador()">Enviar contra-proposta</button>
+          <button class="btn btn-g" type="button" style="margin-top:8px;background:#fef2f2;color:var(--err);border:1px solid #fecaca" onclick="recusarOfertaCuidador()">Recusar oferta</button>
+        </div>
+
+        <div id="oferta-passo2" style="display:none" aria-hidden="true">
+          <p class="hint" id="oferta-passo2-hint">Agora escolha <strong>como quer receber</strong> e finalize. O contratante receberá a notificação para fechar o negócio. (PIX/boleto só depois, em Faturamento.)</p>
+          <label class="lbl">Forma de recebimento</label>
+          <div class="chip-row" id="oferta-pag-freq">
+            <button type="button" class="chip on" data-v="diaria" onclick="selChip(this,'oferta-pag-freq');toggleOfertaPagSemanal()">Diária (fim do plantão)</button>
+            <button type="button" class="chip" data-v="semanal" onclick="selChip(this,'oferta-pag-freq');toggleOfertaPagSemanal()">A cada 7 dias</button>
+            <button type="button" class="chip" data-v="quinzenal" onclick="selChip(this,'oferta-pag-freq');toggleOfertaPagSemanal()">Quinzenal</button>
+          </div>
+          <label class="lbl" style="margin-top:12px">Duração do trabalho (dias)</label>
+          <input class="inp" id="oferta-duracao-dias" type="number" min="1" max="365" value="15" placeholder="Ex.: 15" oninput="atualizarResumoPagOferta();atualizarAvisoTaxaOferta()"/>
+          <div id="oferta-pag-dia-semana" style="display:none;margin-top:8px">
+            <label class="lbl">Dia da semana para recebimento</label>
+            <div class="chip-row" id="oferta-pag-dia">
+              <button type="button" class="chip on" data-v="seg" onclick="selChip(this,'oferta-pag-dia');atualizarResumoPagOferta()">Seg</button>
+              <button type="button" class="chip" data-v="ter" onclick="selChip(this,'oferta-pag-dia');atualizarResumoPagOferta()">Ter</button>
+              <button type="button" class="chip" data-v="qua" onclick="selChip(this,'oferta-pag-dia');atualizarResumoPagOferta()">Qua</button>
+              <button type="button" class="chip" data-v="qui" onclick="selChip(this,'oferta-pag-dia');atualizarResumoPagOferta()">Qui</button>
+              <button type="button" class="chip" data-v="sex" onclick="selChip(this,'oferta-pag-dia');atualizarResumoPagOferta()">Sex</button>
+              <button type="button" class="chip" data-v="sab" onclick="selChip(this,'oferta-pag-dia');atualizarResumoPagOferta()">Sáb</button>
+              <button type="button" class="chip" data-v="dom" onclick="selChip(this,'oferta-pag-dia');atualizarResumoPagOferta()">Dom</button>
+            </div>
+          </div>
+          <p class="hint" id="oferta-pag-resumo" style="margin-top:8px"></p>
+          <div class="note" style="margin-top:12px;font-size:12px;line-height:1.5">
+            <p><strong>Aviso:</strong> O app não se responsabiliza por inadimplência. Pagamento acordado entre as partes.</p>
+            <p style="margin-top:8px"><strong>Primeiro pagamento:</strong> somente após autenticação da primeira diária pelo contratante.</p>
+            <div style="margin-top:8px" id="oferta-aviso-multa"></div>
+          </div>
+          <button class="btn btn-p" type="button" style="margin-top:12px" onclick="finalizarFormaRecebimento()">Finalizar e enviar ao contratante</button>
+        </div>
       </div>
     </div>
   </section>
@@ -1213,8 +1331,63 @@ html,body{
         <button type="button" class="chip on" data-v="07:00" onclick="selChip(this,'plantao-hoje-inicio')">07:00</button>
         <button type="button" class="chip" data-v="19:00" onclick="selChip(this,'plantao-hoje-inicio')">19:00</button>
       </div>
-      <button class="btn btn-p" type="button" onclick="salvarPlantaoHoje()">Publicar disponibilidade</button>
+      <p class="step" style="margin-top:16px">Valor da diária (R$)</p>
+      <p class="hint">Informe quanto cobra em cada escala oferecida hoje. Referência: diária + taxa de <strong>R$ 10,29/dia</strong> (US$ 1,99/dia).</p>
+      <div class="row2">
+        <div><label class="lbl" style="font-size:11px">Plantão 12 h</label><input class="inp" id="plantao-rate-12" type="number" min="0" step="1" placeholder="Ex.: 200" style="margin:0" oninput="atualizarResumoTaxaPlantao()"/></div>
+        <div><label class="lbl" style="font-size:11px">Plantão 24 h</label><input class="inp" id="plantao-rate-24" type="number" min="0" step="1" placeholder="Ex.: 260" style="margin:0" oninput="atualizarResumoTaxaPlantao()"/></div>
+      </div>
+      <div class="note" id="plantao-taxa-resumo" style="margin-top:8px">Informe o valor da escala selecionada.</div>
+      <p class="step" style="margin-top:16px">Como você prefere receber</p>
+      <p class="hint">Usado automaticamente ao aceitar ofertas de famílias.</p>
+      <div class="chip-row" id="plantao-pag-freq">
+        <button type="button" class="chip on" data-v="diaria" onclick="selChip(this,'plantao-pag-freq');togglePlantaoPagSemanal()">Diária (fim do plantão)</button>
+        <button type="button" class="chip" data-v="semanal" onclick="selChip(this,'plantao-pag-freq');togglePlantaoPagSemanal()">A cada 7 dias</button>
+        <button type="button" class="chip" data-v="quinzenal" onclick="selChip(this,'plantao-pag-freq');togglePlantaoPagSemanal()">Quinzenal</button>
+      </div>
+      <div id="plantao-pag-dia-semana" style="display:none;margin-top:8px">
+        <label class="lbl">Dia da semana para recebimento</label>
+        <div class="chip-row" id="plantao-pag-dia">
+          <button type="button" class="chip on" data-v="seg" onclick="selChip(this,'plantao-pag-dia')">Seg</button>
+          <button type="button" class="chip" data-v="ter" onclick="selChip(this,'plantao-pag-dia')">Ter</button>
+          <button type="button" class="chip" data-v="qua" onclick="selChip(this,'plantao-pag-dia')">Qua</button>
+          <button type="button" class="chip" data-v="qui" onclick="selChip(this,'plantao-pag-dia')">Qui</button>
+          <button type="button" class="chip" data-v="sex" onclick="selChip(this,'plantao-pag-dia')">Sex</button>
+          <button type="button" class="chip" data-v="sab" onclick="selChip(this,'plantao-pag-dia')">Sáb</button>
+          <button type="button" class="chip" data-v="dom" onclick="selChip(this,'plantao-pag-dia')">Dom</button>
+        </div>
+      </div>
+      <label class="lbl">Duração típica do trabalho (dias)</label>
+      <input class="inp" id="plantao-duracao-dias" type="number" min="1" max="365" value="15" oninput="atualizarResumoTaxaPlantao()"/>
+      <button class="btn btn-p" type="button" onclick="salvarPlantaoHoje()">Publicar plantão</button>
+      <button class="btn btn-o" type="button" style="margin-top:8px" onclick="show('cuidador-meus-plantoes')">Ver meus plantões</button>
       <div class="note" style="margin-top:12px" id="plantao-hoje-status">Status: inativo</div>
+    </div>
+  </section>
+
+  <!-- ========== MINHAS AGENDAS ========== -->
+  <section class="screen" id="cuidador-minhas-agendas">
+    <div class="topbar">
+      <button type="button" onclick="show('cuidador-painel')">←</button>
+      <h2>Minhas agendas</h2>
+    </div>
+    <div class="pad">
+      <p class="hint">Edite dias, período (semana/quinzena/mês), valores ou remova uma agenda publicada.</p>
+      <div id="lista-agendas-publicadas"></div>
+      <button class="btn btn-p" type="button" style="margin-top:16px" onclick="novaAgendaForm()">+ Nova agenda</button>
+    </div>
+  </section>
+
+  <!-- ========== MEUS PLANTÕES ========== -->
+  <section class="screen" id="cuidador-meus-plantoes">
+    <div class="topbar">
+      <button type="button" onclick="show('cuidador-painel')">←</button>
+      <h2>Meus plantões</h2>
+    </div>
+    <div class="pad">
+      <p class="hint">Altere valor, escala, forma de recebimento ou remova plantões publicados.</p>
+      <div id="lista-plantoes-publicados"></div>
+      <button class="btn btn-p" type="button" style="margin-top:16px" onclick="novoPlantaoForm()">+ Novo plantão hoje</button>
     </div>
   </section>
 
@@ -1264,31 +1437,27 @@ html,body{
   <section class="screen" id="cuidador-taxa">
     <div class="topbar">
       <button type="button" onclick="show('cuidador-painel')">←</button>
-      <h2>Taxa do app (7%)</h2>
+      <h2>Taxa do app (US$ 1,99)</h2>
     </div>
     <div class="pad">
       <div class="note">
-        Taxa de <strong>manutenção da plataforma</strong>: <strong>7%</strong> sobre cada serviço. Quando a taxa pendente atinge <strong>R$ 50,00</strong>, você continua vendo ofertas mas <strong>não pode aceitar nem enviar propostas</strong> até quitar.
+        Taxa de <strong>US$ 1,99 por diária</strong> (<strong>R$ 10,29</strong> de referência). Ex.: 10 diárias = US$ 19,90. Você pode pagar após receber do contratante. Só pode haver <strong>uma cobrança de taxa pendente</strong> por vez — com taxa em aberto você vê ofertas, mas <strong>não aceita nem envia propostas</strong> até quitar via App Store.
       </div>
       <div id="taxa-alerta"></div>
       <div class="stat-grid" style="margin-top:16px">
-        <div class="stat-box"><b id="taxa-bruto">R$ 0</b><small>Serviços brutos</small></div>
-        <div class="stat-box"><b id="taxa-valor">R$ 0</b><small>Taxa 7% devida</small></div>
-        <div class="stat-box"><b id="taxa-pendente" style="color:var(--err)">R$ 0</b><small>Pendente (limite R$ 50)</small></div>
+        <div class="stat-box"><b id="taxa-bruto">R$ 0</b><small>Diárias recebidas</small></div>
+        <div class="stat-box"><b id="taxa-valor">US$ 1,99</b><small>Taxa por diária</small></div>
+        <div class="stat-box"><b id="taxa-pendente" style="color:var(--err)">US$ 0</b><small>Taxa pendente</small></div>
       </div>
       <div class="cv" id="taxa-detalhe" style="margin-top:12px"></div>
       <p class="step" style="margin-top:16px">Pagar taxa pendente</p>
-      <div class="chip-row" id="taxa-pag-metodo">
-        <button type="button" class="chip on" data-v="pix" onclick="selChip(this,'taxa-pag-metodo')">PIX</button>
-        <button type="button" class="chip" data-v="google_play_iap" onclick="selChip(this,'taxa-pag-metodo')">Google Play (IAP)</button>
-        <button type="button" class="chip" data-v="apple_iap" onclick="selChip(this,'taxa-pag-metodo')">Apple App Store (IAP)</button>
-      </div>
-      <button class="btn btn-p" type="button" style="margin-top:12px" onclick="pagarTaxaPlataforma()">Gerar pagamento da taxa</button>
-      <button class="btn btn-o" type="button" style="margin-top:8px" onclick="confirmarTaxaPix()">Confirmar PIX da taxa pago</button>
-      <div id="taxa-pix-box" class="cob-box" style="display:none;margin-top:12px"></div>
+      <p class="hint">Pagamento via <strong>Apple App Store</strong> — produto consumível <code>ic24_taxa_manutencao</code> (US$ 1,99 por diária; várias compras se o trabalho tiver várias diárias).</p>
+      <button class="btn btn-p" type="button" id="taxa-pagar-btn" style="margin-top:12px" onclick="pagarTaxaPlataforma()">Pagar taxa via App Store</button>
       <div class="note" style="margin-top:12px;font-size:12px">
-        <strong>Lojas:</strong> Google Play Billing e Apple StoreKit — produto <code>ic24_taxa_manutencao</code>. Pagamentos IAP registrados em <code>platform_fee_payments</code> no Firebase.
+        Histórico de taxas pagas via App Store (<code>ic24_taxa_manutencao</code>).
       </div>
+      <p class="step" style="margin-top:16px">Histórico de taxas pagas</p>
+      <div id="taxa-historico"></div>
     </div>
   </section>
 
@@ -1349,16 +1518,17 @@ html,body{
   <div id="modalContent" style="text-align:center;color:#fff"></div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-functions-compat.js"></script>
 <script src="pix.js"></script>
 <script src="firebase-ic24.js"></script>
 <script src="ic24-curriculo.js"></script>
 <script src="ic24-ofertas.js"></script>
 <script src="ic24-cobranca.js"></script>
+<script src="ic24-disponibilidade.js"></script>
 <script>
 let _chatUnsub=null;
 window._cuidSpecs=[];
@@ -1381,28 +1551,7 @@ async function syncDocumentosUI(){
       if(docsMap[k]?.fileUrl) el.classList.add('done');
       else el.classList.remove('done');
     });
-    const snap=await ic24Db.collection('caregivers').doc(uid).get();
-    const exp=(snap.exists?snap.data().cursoExperienciaTexto:'')||'';
-    syncExperienciaCursoInputs(exp);
   }catch(e){ /* ignore */ }
-}
-function syncExperienciaCursoInputs(val){
-  ['curso-exp-texto','curso-exp-texto-cv'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el&&el.value!==val) el.value=val;
-  });
-}
-async function salvarExperienciaCurso(){
-  const txt=(document.getElementById('curso-exp-texto')?.value||document.getElementById('curso-exp-texto-cv')?.value||'').trim();
-  if(txt.length>0&&txt.length<20){ toast('Descreva sua experiência com pelo menos 20 caracteres'); return; }
-  try{
-    await ic24SalvarPainelCuidador({cursoExperienciaTexto:txt});
-    syncExperienciaCursoInputs(txt);
-    const uid=ic24Auth?.currentUser?.uid;
-    if(uid) await ic24RecomputeCurriculo(uid);
-    await carregarPainelCuidador();
-    toast(txt?'Experiência salva — classificação atualizada':'Descrição removida');
-  }catch(e){ toast(e.message||'Erro ao salvar experiência'); }
 }
 function irPesquisaDe(deOnde){
   window._pesquisaVoltar=deOnde||'familia-painel';
@@ -1451,9 +1600,12 @@ function validarEnderecoCad(){
   if(!document.getElementById('cad-uf').value.trim()){ toast('UF obrigatória'); return false; }
   return true;
 }
-function irCuidadorEtapa2(){
+async function irCuidadorEtapa2(){
   if(!validarEnderecoCad()) return;
-  show('cuidador-etapa2');
+  try{
+    await ic24SalvarCuidador();
+    show('cuidador-etapa2');
+  }catch(e){ toast(e.message||'Erro ao salvar endereço'); }
 }
 function addEspecialidade(){
   const inp=document.getElementById('cuid-spec');
@@ -1472,20 +1624,36 @@ function removeEspecialidade(i){
   window._cuidSpecs.splice(i,1);
   renderSpecChips();
 }
-function irCuidadorEtapa3(){
+async function irCuidadorEtapa3(){
   if(!document.getElementById('cuid-bio').value.trim()){ toast('Escreva um pouco sobre você'); return; }
-  show('cuidador-etapa3');
-}
-async function finalizarCuidador(){
-  const hour=document.getElementById('cuid-hour').value.trim();
-  const daily=document.getElementById('cuid-daily').value.trim();
-  if(!hour&&!daily){ toast('Informe valor por hora ou por dia'); return; }
+  if(!window._photoUploaded && !window._pendingProfilePhoto && !(window._cuidPainel?.photoUrl)){
+    toast('Envie sua foto de perfil — toque no círculo acima'); return;
+  }
   try{
     if(window._pendingProfilePhoto){
-      try{ await ic24UploadFotoPerfil(window._pendingProfilePhoto); }catch(e){ toast(e.message||'Foto pendente — envie no currículo'); }
+      await ic24UploadFotoPerfil(window._pendingProfilePhoto);
       window._pendingProfilePhoto=null;
+      window._photoUploaded=true;
     }
     await ic24SalvarCuidador();
+    show('cuidador-etapa3');
+  }catch(e){ toast(e.message||'Erro ao salvar perfil'); }
+}
+async function finalizarCuidador(){
+  if(!window._photoUploaded && !window._pendingProfilePhoto && !(window._cuidPainel?.photoUrl)){
+    toast('Foto de perfil obrigatória — volte à etapa 2'); show('cuidador-etapa2'); return;
+  }
+  try{
+    if(window._pendingProfilePhoto){
+      await ic24UploadFotoPerfil(window._pendingProfilePhoto);
+      window._pendingProfilePhoto=null;
+      window._photoUploaded=true;
+    }
+    await ic24SalvarCuidador();
+    await ic24SalvarPainelCuidador({
+      basicSignupComplete: true,
+      signupCompletedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
     const uid=ic24Auth?.currentUser?.uid;
     if(uid) await ic24RecomputeCurriculo(uid);
     await carregarPainelCuidador();
@@ -1570,14 +1738,13 @@ function preencherCadastroCuidador(d){
   set('cad-cidade', d.city);
   set('cad-uf', d.state);
   set('cuid-bio', d.bio);
-  if(d.hourRate!=null) set('cuid-hour', d.hourRate);
-  if(d.dailyRate!=null) set('cuid-daily', d.dailyRate);
   set('cuid-cpf', d.cpf);
   if(Array.isArray(d.specialties)){
     window._cuidSpecs=[...d.specialties];
     renderSpecChips();
   }
   if(d.photoUrl){
+    window._photoUploaded=true;
     ['etapa2-foto-preview','cuid-foto-preview'].forEach(id=>{
       const img=document.getElementById(id);
       if(img){ img.src=d.photoUrl; img.style.display='block'; }
@@ -1663,7 +1830,16 @@ function fotoPerfilEtapa2(input){
   };
   r.readAsDataURL(f);
   window._pendingProfilePhoto=f;
-  toast('Foto selecionada — será enviada ao finalizar o cadastro');
+  ic24InitFirebase();
+  if(!ic24Auth.currentUser){
+    toast('Foto selecionada — será enviada ao finalizar o cadastro');
+    return;
+  }
+  ic24UploadFotoPerfil(f).then(()=>{
+    window._pendingProfilePhoto=null;
+    window._photoUploaded=true;
+    toast('Foto salva no Firebase');
+  }).catch(e=>{ toast(e.message||'Erro ao enviar foto — tente outra imagem'); input.value=''; window._pendingProfilePhoto=null; });
 }
 async function fotoPerfilPainel(input){
   const f=input.files[0];
@@ -1685,7 +1861,6 @@ function anexarDocCurriculo(docKey){
   const inp=document.createElement('input');
   inp.type='file';
   inp.accept='image/*';
-  inp.capture='environment';
   inp.onchange=()=>{
     if(!inp.files[0]) return;
     ic24UploadDocumento(docKey,inp.files[0]).then(()=>{
@@ -1697,12 +1872,14 @@ function anexarDocCurriculo(docKey){
 }
 function anexar(input){
   if(!input.files[0])return;
+  ic24InitFirebase();
+  if(!ic24Auth.currentUser){ toast('Faça login como cuidador'); return; }
   const docKey=input.closest('.doc')?.getAttribute('data-doc');
   const nome=input.closest('.doc')?.querySelector('b')?.textContent||docKey;
   if(!docKey){ toast('Tipo de documento inválido'); return; }
   ic24UploadDocumento(docKey,input.files[0]).then(()=>{
     input.closest('.doc').classList.add('done');
-    toast('Enviado: '+nome.split('—')[0].trim()+' — classificado!');
+    toast('Enviado: '+nome.split('—')[0].trim()+' — salvo no Firebase');
     if(typeof carregarPainelCuidador==='function') carregarPainelCuidador();
   }).catch(e=>toast(e.message||'Erro no upload'));
 }
@@ -1714,13 +1891,7 @@ async function finalizar(){
       toast('Anexe RG, CPF, comprovante, CTPS e antecedentes (foto enviada ao Firebase)'); return;
     }
   }
-  const expTxt=(document.getElementById('curso-exp-texto')?.value||'').trim();
-  const hasCursoDoc=document.querySelector('.doc[data-doc="curso"]')?.classList.contains('done');
-  if(!hasCursoDoc&&expTxt.length<20){
-    toast('Anexe o certificado do curso de cuidador OU descreva seu tempo de experiência (mín. 20 caracteres)'); return;
-  }
   try{
-    if(expTxt) await ic24SalvarPainelCuidador({cursoExperienciaTexto:expTxt});
     await ic24SalvarCuidador();
     const uid=ic24Auth?.currentUser?.uid;
     if(uid) await ic24RecomputeCurriculo(uid);
@@ -1758,13 +1929,11 @@ async function salvarCpfEClassificar(){
 function renderDocsUploadShort(docsMap){
   const box=document.getElementById('cuid-docs-upload');
   if(!box) return;
-  const keys=['cpf','rg','antecedentes','curso','diploma','ctps'];
+  const keys=['cpf','rg','comprovante','antecedentes','curso','ctps'];
   box.innerHTML=keys.map(k=>{
     const done=docsMap&&docsMap[k];
     const meta=IC24_DOC_META[k];
-    const opt=k==='diploma'?' (opcional)':'';
-    const hint=done?'✓ Enviado — toque para substituir':(k==='diploma'?'Opcional — diploma de enfermagem':'Pendente — toque para enviar foto');
-    return '<div class="list-item" style="cursor:pointer" onclick="anexarDocCurriculo(\''+k+'\')"><b>'+(meta?.label||k)+opt+'</b><small>'+hint+'</small></div>';
+    return '<div class="list-item" style="cursor:pointer" onclick="anexarDocCurriculo(\''+k+'\')"><b>'+(meta?.label||k)+'</b><small>'+(done?'✓ Enviado — toque para substituir':'Pendente — toque para enviar foto')+'</small></div>';
   }).join('');
 }
 async function finalizarFamilia(){
@@ -1773,8 +1942,12 @@ async function finalizarFamilia(){
   const senha=document.getElementById('fam-senha').value;
   const senha2=document.getElementById('fam-senha2').value;
   const num=document.getElementById('fam-num').value.trim();
+  if(!nome){ toast('Informe seu nome'); return; }
   if(!num){ toast('Informe o número do endereço'); return; }
   if((document.getElementById('fam-cep').value||'').replace(/\D/g,'').length!==8){ toast('Informe um CEP válido'); return; }
+  if(!document.getElementById('fam-rua').value.trim()){ toast('Busque o CEP ou preencha a rua'); return; }
+  if(!document.getElementById('fam-cidade').value.trim()){ toast('Cidade obrigatória'); return; }
+  if(!document.getElementById('fam-uf').value.trim()){ toast('UF obrigatória'); return; }
   try{
     await ic24CriarConta({nome,email,senha,senha2,role:'family'});
     await ic24SalvarFamilia();
@@ -1787,31 +1960,19 @@ function toast(msg){
   t.textContent=msg; t.classList.add('on');
   setTimeout(()=>t.classList.remove('on'),2500);
 }
-async function solicitarMatch(){
+async function abrirChatNegocio(){
   try{
     ic24InitFirebase();
-    if(!ic24Auth.currentUser){ toast('Faça login como família'); irLogin(); return; }
-    await ic24SolicitarMatch(IC24_DEMO_CAREGIVER);
-    ic24FillPixScreen();
-    show('pix-pay');
-    toast('Match registrado — pague o PIX para liberar o chat');
-  }catch(e){ toast(e.message||'Erro ao solicitar match'); }
-}
-async function copiarPixChave(){
-  await ic24CopyText(IC24_PIX.keyDisplay);
-  toast('Copiado!');
-}
-async function copiarPixCodigo(){
-  const code=window._ic24PixCode||ic24PixCopiaCola();
-  await ic24CopyText(code);
-  toast('Copiado!');
-}
-async function confirmarPix(){
-  try{
-    const chatId=await ic24ConfirmarPixPagamento();
-    toast('Pagamento confirmado — chat liberado!');
-    abrirChat(chatId,true);
-  }catch(e){ toast(e.message||'Erro ao confirmar PIX'); }
+    if(!ic24Auth.currentUser){ toast('Faça login'); irLogin(); return; }
+    const chat=await ic24BuscarChatAtivoUsuario();
+    if(!chat||!chat.id){
+      toast('Chat bloqueado — feche o negócio em Minhas ofertas primeiro');
+      const role=(window._cuidPainel&&Object.keys(window._cuidPainel).length)?'caregiver':'family';
+      show(role==='caregiver'?'cuidador-ofertas':'familia-ofertas');
+      return;
+    }
+    await abrirChat(chat.id,true);
+  }catch(e){ toast(e.message||'Chat indisponível'); }
 }
 function renderChatMsgs(msgs){
   const box=document.getElementById('chatMsgs');
@@ -1880,6 +2041,27 @@ function ic24Classificacao(d){
   return { label:'Nível Inicial — envie documentos', stars:'★★★☆☆ 4,0', score:0, missingRequired:['CPF','Antecedentes','Curso'] };
 }
 function fmtMoeda(n){ return 'R$ '+Number(n||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function atualizarAvisoTaxaDiaria(){
+  const daily=parseFloat(document.getElementById('cuid-daily')?.value)||0;
+  const el=document.getElementById('aviso-taxa-total');
+  if(!el) return;
+  const taxaUnit=typeof IC24_FEE_FIXED_BRL!=='undefined'?IC24_FEE_FIXED_BRL:10.29;
+  if(daily>0){
+    el.innerHTML='Sua diária: <strong>'+fmtMoeda(daily)+'</strong> + taxa <strong>'+fmtMoeda(taxaUnit)+'/dia</strong> (referência; total da taxa = diárias do trabalho × US$ 1,99).';
+  }else{
+    el.textContent='Informe sua diária acima para ver a referência (diária + R$ 10,29/dia de taxa).';
+  }
+}
+function atualizarAvisoTaxaOferta(){
+  const v=parseFloat(document.getElementById('oferta-contra-valor')?.value)||parseFloat(document.getElementById('oferta-acao-id')?.dataset?.daily)||0;
+  const el=document.getElementById('aviso-taxa-oferta');
+  if(!el) return;
+  const dias=parseInt(document.getElementById('oferta-duracao-dias')?.value,10)||15;
+  const taxaUnit=typeof IC24_FEE_FIXED_BRL!=='undefined'?IC24_FEE_FIXED_BRL:10.29;
+  const taxaTotal=Math.round(taxaUnit*dias*100)/100;
+  if(v>0) el.innerHTML='Diária: <strong>'+fmtMoeda(v)+'</strong> · '+dias+' diária(s) · taxa total <strong>'+fmtMoeda(taxaTotal)+'</strong> ('+dias+'× '+fmtMoeda(taxaUnit)+') — referência.';
+  else el.innerHTML='Taxa de manutenção: <strong>R$ 10,29/dia</strong> (US$ 1,99/dia) — multiplicada pelo número de diárias do trabalho.';
+}
 
 async function carregarPainelCuidador(){
   ic24InitFirebase();
@@ -1892,6 +2074,10 @@ async function carregarPainelCuidador(){
     docsMap=await ic24ListDocumentos(uid);
     d.documentsList=Object.entries(docsMap).map(([k,v])=>({key:k,...v}));
     if(d.activeFamilyId) window._activeFamilyId=d.activeFamilyId;
+    try{
+      if(typeof ic24ListarTrabalhosCuidador==='function') d.workHistory=await ic24ListarTrabalhosCuidador(uid);
+      if(typeof ic24ResumoFinanceiroCuidador==='function') d.finance=await ic24ResumoFinanceiroCuidador();
+    }catch(e){ console.warn('painel finance/hist',e); }
   const pixKeyEl=document.getElementById('cob-pix-key');
   const pixTitEl=document.getElementById('cob-pix-titular');
   if(pixKeyEl&&d.pixKey) pixKeyEl.value=d.pixKey;
@@ -1928,6 +2114,10 @@ async function carregarPainelCuidador(){
   renderHistorico(d);
   if(d.agenda) aplicarAgendaUI(d.agenda);
   if(d.plantaoHoje) aplicarPlantaoHojeUI(d.plantaoHoje);
+  window._cuidPainel.agendas=ic24MigrarAgendasLegacy(d);
+  window._cuidPainel.plantoes=ic24MigrarPlantoesLegacy(d);
+  renderListasAgendaPlantao();
+  aplicarPaymentPrefsUI(d.paymentPreferences||{});
   if(d.pontoLog) renderPontoLog(d.pontoLog);
   if(d.pontoObs&&document.getElementById('ponto-obs')) document.getElementById('ponto-obs').value=d.pontoObs;
   renderTaxaAlerta(d);
@@ -1947,34 +2137,40 @@ function renderTaxaAlerta(d){
   const box=document.getElementById('taxa-alerta');
   if(!box) return;
   const pend=ic24PlatformFeePending(d);
-  if(pend>=IC24_FEE_LIMIT){
-    box.innerHTML='<div class="fee-warn"><strong>Taxa pendente: '+fmtMoeda(pend)+'</strong><br/>Limite de R$ 50 atingido. Quite em <b>Taxa do app</b> para aceitar ofertas novamente.</div>';
-  } else if(pend>0){
-    box.innerHTML='<div class="fee-ok">Taxa pendente: '+fmtMoeda(pend)+' de '+fmtMoeda(IC24_FEE_LIMIT)+' — quite antes de atingir o limite.</div>';
+  if(ic24OffersBlockedByFee(d)){
+    box.innerHTML='<div class="fee-warn"><strong>Taxa pendente: '+ic24FmtTaxaUsd(pend)+'</strong><br/>Quite via App Store para aceitar ofertas e enviar propostas novamente.</div>';
   } else box.innerHTML='';
 }
 
 function renderOfertasTaxaBloqueio(d){
   const box=document.getElementById('ofertas-taxa-bloqueio');
   if(!box) return;
-  if(ic24OffersBlockedByFee(d)){
-    box.innerHTML='<div class="fee-warn"><strong>Ofertas bloqueadas</strong> — taxa pendente '+fmtMoeda(ic24PlatformFeePending(d))+'. Você pode visualizar, mas não aceitar nem enviar proposta até pagar em Taxa do app (7%).</div>';
+  const multa=typeof ic24CancellationFeePending==='function'?ic24CancellationFeePending(d):0;
+  if(multa>0){
+    box.innerHTML='<div class="fee-warn"><strong>Multa de cancelamento pendente: '+fmtMoeda(multa)+'</strong><br/>Quite para aceitar ofertas e enviar propostas.</div>';
+  }else if(ic24OffersBlockedByFee(d)){
+    box.innerHTML='<div class="fee-warn"><strong>Ofertas bloqueadas</strong> — taxa pendente '+ic24FmtTaxaUsd(ic24PlatformFeePending(d))+' ('+ic24PlatformFeePendingDiarias(d)+' diária(s)). Você pode visualizar, mas não aceitar nem enviar proposta até pagar em Taxa do app.</div>';
   } else box.innerHTML='';
+}
+function injetarAvisoMultaCancelamento(elId){
+  const el=document.getElementById(elId);
+  if(el&&typeof ic24HtmlAvisoMultaCancelamento==='function') el.innerHTML=ic24HtmlAvisoMultaCancelamento();
 }
 
 function renderCurriculo(d, cls, docsMap){
   const box=document.getElementById('cuid-curriculo-dados');
   const classBox=document.getElementById('cuid-classificacao-box');
   if(!box) return;
-  const addr=d.address||enderecoResumo('cad')||'—';
+  const regiao=[d.city,d.state].filter(Boolean).join(' — ')||'—';
   const specs=(d.specialties||window._cuidSpecs||[]).join(', ')||'—';
   const docCount=docsMap?Object.keys(docsMap).length:(d.documentsCount||0);
   box.innerHTML=
     '<p><strong>Nome:</strong> '+escapeHtml(d.fullName||'—')+'</p>'+
-    '<p><strong>Endereço:</strong> '+escapeHtml(addr)+'</p>'+
+    '<p><strong>Região:</strong> '+escapeHtml(regiao)+'</p>'+
+    '<p class="hint" style="font-size:12px">Telefone, e-mail e endereço completo não aparecem no currículo enviado ao contratante.</p>'+
     '<p><strong>Sobre:</strong> '+escapeHtml(d.bio||document.getElementById('cuid-bio')?.value||'—')+'</p>'+
     '<p><strong>Especialidades:</strong> '+escapeHtml(specs)+'</p>'+
-    '<p><strong>Valores:</strong> '+fmtMoeda(d.hourRate)+'/h · '+fmtMoeda(d.dailyRate)+'/dia</p>'+
+    '<p><strong>Valores:</strong> '+escapeHtml(typeof ic24ExibirRateCaregiver==='function'?ic24ExibirRateCaregiver(d):'Publique agenda ou plantão com diária')+'</p>'+
     '<p><strong>Documentos no Firebase:</strong> '+docCount+' foto(s)</p>';
   if(classBox) classBox.innerHTML=
     '<p><strong>'+escapeHtml(cls.label||'—')+'</strong></p>'+
@@ -2006,29 +2202,111 @@ function renderOfertas(){
 }
 function selecionarOfertaCuidador(id){
   document.getElementById('oferta-acao-id').value=id;
+  document.getElementById('oferta-resposta-id').value='';
   document.getElementById('oferta-acao-box').style.display='block';
+  document.getElementById('oferta-passo1').style.display='block';
+  document.getElementById('oferta-passo2').style.display='none';
   document.getElementById('oferta-acao-titulo').textContent='Responder oferta '+id.slice(0,8)+'…';
-  toast('Preencha contra-proposta ou aceite');
+  window._ofertaAtualId=id;
+  ic24InitFirebase();
+  ic24Db.collection('job_offers').doc(id).get().then(snap=>{
+    window._ofertaAtual=snap.exists?{id,...snap.data()}:null;
+  }).catch(()=>{ window._ofertaAtual=null; });
+}
+function mostrarPasso2Oferta(responseId, isCounter){
+  document.getElementById('oferta-resposta-id').value=responseId;
+  document.getElementById('oferta-passo1').style.display='none';
+  document.getElementById('oferta-passo2').style.display='block';
+  injetarAvisoMultaCancelamento('oferta-aviso-multa');
+  const hint=document.getElementById('oferta-passo2-hint');
+  if(hint){
+    hint.innerHTML=isCounter
+      ? 'Contra-proposta registrada. Agora escolha <strong>como quer receber</strong> e finalize.'
+      : 'Oferta aceita. Agora escolha <strong>como quer receber</strong> e finalize.';
+  }
+  toggleOfertaPagSemanal();
+}
+function toggleOfertaPagSemanal(){
+  const freq=chipVal('oferta-pag-freq')||'diaria';
+  const box=document.getElementById('oferta-pag-dia-semana');
+  if(box) box.style.display=freq==='semanal'?'block':'none';
+  atualizarResumoPagOferta();
+}
+function taxaDiariaOfertaAtual(){
+  const v=parseFloat(document.getElementById('oferta-contra-valor')?.value);
+  if(v&&v>0) return v;
+  const o=window._ofertaAtual||{};
+  return parseFloat(o.dailyRate)||parseFloat(window._cuidPainel?.displayDailyRate)||ic24RateForScale(window._cuidPainel?.plantaoHoje?.ratesByScale, window._cuidPainel?.plantaoHoje?.escala, 0)||0;
+}
+function atualizarResumoPagOferta(){
+  const el=document.getElementById('oferta-pag-resumo');
+  if(!el) return;
+  try{
+    const freq=chipVal('oferta-pag-freq')||'diaria';
+    const weekDay=chipVal('oferta-pag-dia')||'seg';
+    const dias=parseInt(document.getElementById('oferta-duracao-dias')?.value,10)||15;
+    const rate=taxaDiariaOfertaAtual()||1;
+    const calc=ic24CalcularPropostaPagamento(rate,freq,weekDay,dias);
+    const fee=typeof ic24CalcPlatformFee==='function'?ic24CalcPlatformFee(dias):{usd:dias*1.99,diarias:dias};
+    el.textContent='Resumo: '+calc.scheduleLabel+' · '+dias+' diária(s) · R$ '+Number(calc.perCycleAmount).toFixed(2)+' por ciclo · taxa plataforma '+ic24FmtTaxaUsd(fee.usd)+' ('+fee.diarias+'× US$ 1,99)';
+  }catch(_){ el.textContent=''; }
+}
+function termosRecebimentoOferta(){
+  const freq=chipVal('oferta-pag-freq')||'diaria';
+  const weekDay=chipVal('oferta-pag-dia')||'seg';
+  const dias=parseInt(document.getElementById('oferta-duracao-dias')?.value,10)||15;
+  if(!dias||dias<1) throw new Error('Informe a duração do trabalho em dias');
+  return { paymentSchedule: freq, paymentWeekDay: weekDay, jobDurationDays: dias };
 }
 async function aceitarOfertaCuidador(){
-  if(ic24OffersBlockedByFee(window._cuidPainel||{})){ toast('Taxa pendente ≥ R$ 50 — pague em Taxa do app (7%)'); show('cuidador-taxa'); return; }
+  if(typeof ic24UserBlockedByDebts==='function'&&ic24UserBlockedByDebts(window._cuidPainel||{})){
+    toast('Taxa ou multa pendente — regularize antes de aceitar ofertas');
+    show('cuidador-taxa'); return;
+  }
+  if(ic24OffersBlockedByFee(window._cuidPainel||{})){ toast('Taxa pendente — quite em Taxa do app'); show('cuidador-taxa'); return; }
   const id=document.getElementById('oferta-acao-id').value;
   if(!id){ toast('Selecione uma oferta'); return; }
+  const prefs=window._cuidPainel?.paymentPreferences||{};
+  if(!prefs.configured){
+    toast('Configure forma de recebimento em Oferecer plantão hoje');
+    show('cuidador-plantao-hoje'); return;
+  }
   try{
-    await ic24ResponderOferta(id,{action:'accept',message:document.getElementById('oferta-contra-msg').value});
-    toast('Oferta aceita — aguardando confirmação da família');
-    await carregarPainelCuidador();
+    await ic24AceitarOfertaComTermos(id,{action:'accept',message:document.getElementById('oferta-contra-msg')?.value||''});
+    toast('Proposta enviada ao contratante!');
+    document.getElementById('oferta-acao-box').style.display='none';
     renderOfertas();
   }catch(e){ toast(e.message||'Erro'); }
 }
 async function contraOfertaCuidador(){
-  if(ic24OffersBlockedByFee(window._cuidPainel||{})){ toast('Taxa pendente ≥ R$ 50 — pague em Taxa do app (7%)'); show('cuidador-taxa'); return; }
+  if(typeof ic24UserBlockedByDebts==='function'&&ic24UserBlockedByDebts(window._cuidPainel||{})){
+    toast('Taxa ou multa pendente — regularize antes de enviar propostas');
+    show('cuidador-taxa'); return;
+  }
+  if(ic24OffersBlockedByFee(window._cuidPainel||{})){ toast('Taxa pendente — quite em Taxa do app'); show('cuidador-taxa'); return; }
   const id=document.getElementById('oferta-acao-id').value;
-  const v=document.getElementById('oferta-contra-valor').value;
-  if(!id||!v){ toast('Informe valor da contra-proposta'); return; }
+  const v=parseFloat(document.getElementById('oferta-contra-valor')?.value);
+  if(!id||!v||v<=0){ toast('Informe valor da contra-proposta'); return; }
+  const prefs=window._cuidPainel?.paymentPreferences||{};
+  if(!prefs.configured){
+    toast('Configure forma de recebimento em Oferecer plantão hoje');
+    show('cuidador-plantao-hoje'); return;
+  }
   try{
-    await ic24ResponderOferta(id,{action:'counter',proposedDailyRate:parseFloat(v),message:document.getElementById('oferta-contra-msg').value});
-    toast('Nova proposta enviada à família');
+    await ic24AceitarOfertaComTermos(id,{action:'counter',proposedDailyRate:v,message:document.getElementById('oferta-contra-msg')?.value||''});
+    toast('Contra-proposta enviada ao contratante!');
+    document.getElementById('oferta-acao-box').style.display='none';
+    renderOfertas();
+  }catch(e){ toast(e.message||'Erro'); }
+}
+async function finalizarFormaRecebimento(){
+  const responseId=document.getElementById('oferta-resposta-id').value;
+  if(!responseId){ toast('Complete o passo anterior'); return; }
+  try{
+    const terms=termosRecebimentoOferta();
+    const r=await ic24FinalizarFormaRecebimento(responseId,terms);
+    toast('Enviado ao contratante!');
+    document.getElementById('oferta-acao-box').style.display='none';
     renderOfertas();
   }catch(e){ toast(e.message||'Erro'); }
 }
@@ -2057,31 +2335,152 @@ function renderFaturamento(d){
 }
 
 function renderTaxa(d){
-  const fin=d.finance||{total:2640};
+  const fin=d.finance||{total:0,mes:0,pendente:0,plantoes:0};
   const bruto=fin.total||0;
-  const taxa=bruto*0.07;
   const pend=ic24PlatformFeePending(d);
+  const diariasPend=ic24PlatformFeePendingDiarias(d);
+  const offerId=d.platformFeePendingOfferId||'';
   document.getElementById('taxa-bruto').textContent=fmtMoeda(bruto);
-  document.getElementById('taxa-valor').textContent=fmtMoeda(taxa);
+  document.getElementById('taxa-valor').textContent=ic24FmtTaxaUsd(IC24_FEE_FIXED_USD);
   const pendEl=document.getElementById('taxa-pendente');
-  if(pendEl) pendEl.textContent=fmtMoeda(pend);
+  if(pendEl) pendEl.textContent=pend>0?ic24FmtTaxaUsd(pend):'US$ 0,00';
+  const btn=document.getElementById('taxa-pagar-btn');
+  if(btn) btn.textContent=pend>0?(diariasPend>1?'Pagar '+diariasPend+'× US$ 1,99 via App Store ('+ic24FmtTaxaUsd(pend)+')':'Pagar US$ 1,99 via App Store'):'Pagar taxa via App Store';
   document.getElementById('taxa-detalhe').innerHTML=
-    '<p>Taxa de manutenção: <strong>7%</strong> sobre serviços na plataforma.</p>'+
-    '<p style="margin-top:8px">Pendente acumulado: <strong style="color:'+(pend>=IC24_FEE_LIMIT?'var(--err)':'var(--p)')+'">'+fmtMoeda(pend)+'</strong> / limite '+fmtMoeda(IC24_FEE_LIMIT)+'</p>'+
-    (pend>=IC24_FEE_LIMIT?'<p style="margin-top:8px;color:var(--err)">Aceitar ofertas <strong>bloqueado</strong> até quitar.</p>':'')+
-    '<p style="margin-top:8px">Líquido estimado: <strong>'+fmtMoeda(bruto-taxa)+'</strong></p>';
+    '<p>Taxa de manutenção: <strong>'+ic24FmtTaxaUsd(IC24_FEE_FIXED_USD)+'</strong> ('+ic24FmtTaxaBrl(IC24_FEE_FIXED_BRL)+') <strong>por diária</strong> (máx. 1 cobrança pendente por negócio).</p>'+
+    (pend>0?'<p style="margin-top:8px">Taxa pendente: <strong style="color:var(--err)">'+ic24FmtTaxaUsd(pend)+'</strong> · <strong>'+diariasPend+' diária(s)</strong>'+(offerId?' · plantão <code>'+escapeHtml(String(offerId).slice(0,12))+'…</code>':'')+'</p>':'<p style="margin-top:8px;color:var(--p)">Nenhuma taxa pendente — você pode aceitar novos negócios.</p>')+
+    (ic24OffersBlockedByFee(d)?'<p style="margin-top:8px;color:var(--err)">Aceitar ofertas <strong>bloqueado</strong> até quitar via App Store.</p>':'')+
+    '<p style="margin-top:8px">Diárias recebidas: <strong>'+fmtMoeda(bruto)+'</strong> · '+Number(fin.plantoes||0)+' cobrança(s) paga(s)</p>';
   renderTaxaAlerta(d);
+  carregarHistoricoTaxa();
+}
+
+async function carregarHistoricoTaxa(){
+  const box=document.getElementById('taxa-historico');
+  if(!box) return;
+  try{
+    const list=await ic24ListarTaxasPlataformaCuidador();
+    box.innerHTML=list.length?list.map(p=>{
+      const when=p.createdAt&&p.createdAt.toDate?p.createdAt.toDate().toLocaleDateString('pt-BR'):'—';
+      return '<div class="list-item"><b>'+ic24FmtTaxaUsd(p.amount||IC24_FEE_FIXED_USD)+' · App Store</b><small>'+when+(p.offerId?' · plantão '+escapeHtml(String(p.offerId).slice(0,10))+'…':'')+'</small></div>';
+    }).join(''):'<p class="hint">Nenhuma taxa paga ainda.</p>';
+  }catch(e){ box.innerHTML='<p class="hint">'+escapeHtml(e.message)+'</p>'; }
 }
 
 function renderHistorico(d){
   const list=document.getElementById('historico-lista');
   if(!list) return;
-  const hist=d.workHistory||[
-    {data:'10–11/06',tipo:'Plantão 24h',local:'Montes Claros',valor:420,status:'Concluído'},
-    {data:'05/06',tipo:'Escala 12h',local:'Montes Claros',valor:280,status:'Concluído'},
-    {data:'28/05',tipo:'Diária 8h',local:'Montes Claros',valor:180,status:'Concluído'},
-  ];
+  const hist=d.workHistory||[];
+  if(!hist.length){
+    list.innerHTML='<p class="hint">Nenhum plantão concluído ainda. Após fechar negócio, o histórico aparece aqui.</p>';
+    return;
+  }
   list.innerHTML=hist.map(h=>'<div class="list-item"><b>'+escapeHtml(h.tipo)+' · '+escapeHtml(h.data)+'</b><small>'+escapeHtml(h.local)+' · '+fmtMoeda(h.valor)+' · '+escapeHtml(h.status)+'</small></div>').join('');
+}
+
+function atualizarResumoTaxaAgenda(){
+  const escala=chipVal('agenda-escala')||'8';
+  const rates=ic24ColetarRatesByScale('agenda', IC24_ESCALAS_AGENDA);
+  const dias=parseInt(document.getElementById('agenda-duracao-dias')?.value,10)||1;
+  const el=document.getElementById('agenda-taxa-resumo');
+  if(!el) return;
+  const parts=[];
+  Object.keys(rates).sort((a,b)=>Number(a)-Number(b)).forEach(h=>{
+    const ref=ic24FmtTotalRefDiariaTaxa(rates[h], dias);
+    if(ref) parts.push(h+'h: '+ref.label);
+  });
+  if(parts.length) el.innerHTML=parts.join('<br/>');
+  else el.textContent='Informe ao menos um valor por escala (ex.: 8h e 12h).';
+}
+function atualizarResumoTaxaPlantao(){
+  const escala=chipVal('plantao-hoje-escala')||'12';
+  const rates=ic24ColetarRatesByScale('plantao', IC24_ESCALAS_PLANTAO);
+  const daily=ic24RateForScale(rates, escala, 0);
+  const dias=parseInt(document.getElementById('plantao-duracao-dias')?.value,10)||1;
+  const el=document.getElementById('plantao-taxa-resumo');
+  if(!el) return;
+  const ref=ic24FmtTotalRefDiariaTaxa(daily, dias);
+  if(ref) el.innerHTML='<strong>Escala '+escala+'h:</strong> '+ref.label;
+  else el.textContent='Informe o valor da escala '+escala+'h (ex.: R$ 200).';
+}
+function limparFormAgenda(){
+  window._editAgendaId=null;
+  document.querySelectorAll('#agenda-dias .day-btn').forEach(b=>b.classList.remove('on'));
+  IC24_ESCALAS_AGENDA.forEach(h=>{ const el=document.getElementById('agenda-rate-'+h); if(el) el.value=''; });
+  atualizarResumoTaxaAgenda();
+}
+function limparFormPlantao(){
+  window._editPlantaoId=null;
+  const chk=document.getElementById('plantao-hoje-ativo');
+  if(chk) chk.checked=false;
+  IC24_ESCALAS_PLANTAO.forEach(h=>{ const el=document.getElementById('plantao-rate-'+h); if(el) el.value=''; });
+  atualizarResumoTaxaPlantao();
+}
+function novaAgendaForm(){ limparFormAgenda(); show('cuidador-agenda'); }
+function novoPlantaoForm(){ limparFormPlantao(); show('cuidador-plantao-hoje'); }
+function renderListasAgendaPlantao(){
+  const d=window._cuidPainel||{};
+  const agendas=d.agendas||ic24MigrarAgendasLegacy(d);
+  const plantoes=d.plantoes||ic24MigrarPlantoesLegacy(d);
+  const la=document.getElementById('lista-agendas-publicadas');
+  if(la){
+    la.innerHTML=agendas.length?agendas.map(a=>'<div class="list-item"><b>'+escapeHtml(ic24ResumoAgendaEntry(a))+'</b>'+
+      '<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">'+
+      '<button class="btn btn-o" type="button" style="height:36px;flex:1" onclick="editarAgenda(\''+a.id+'\')">Editar</button>'+
+      '<button class="btn btn-g" type="button" style="height:36px;flex:1;background:#fef2f2;color:var(--err);border:1px solid #fecaca" onclick="removerAgenda(\''+a.id+'\')">Remover</button></div></div>').join(''):
+      '<p class="hint">Nenhuma agenda publicada. Toque em + Nova agenda.</p>';
+  }
+  const lp=document.getElementById('lista-plantoes-publicados');
+  if(lp){
+    lp.innerHTML=plantoes.length?plantoes.map(p=>'<div class="list-item"><b>'+escapeHtml(ic24ResumoPlantaoEntry(p))+'</b>'+
+      '<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">'+
+      '<button class="btn btn-o" type="button" style="height:36px;flex:1" onclick="editarPlantao(\''+p.id+'\')">Editar</button>'+
+      '<button class="btn btn-g" type="button" style="height:36px;flex:1;background:#fef2f2;color:var(--err);border:1px solid #fecaca" onclick="removerPlantao(\''+p.id+'\')">Remover</button></div></div>').join(''):
+      '<p class="hint">Nenhum plantão publicado.</p>';
+  }
+}
+function editarAgenda(id){
+  const a=(window._cuidPainel?.agendas||[]).find(x=>x.id===id);
+  if(!a){ toast('Agenda não encontrada'); return; }
+  window._editAgendaId=id;
+  aplicarAgendaUI(a);
+  if(a.ratesByScale) ic24AplicarRatesByScale('agenda', a.ratesByScale, IC24_ESCALAS_AGENDA);
+  if(a.paymentPreferences) aplicarPaymentPrefsUI(a.paymentPreferences);
+  atualizarResumoTaxaAgenda();
+  show('cuidador-agenda');
+}
+function editarPlantao(id){
+  const p=(window._cuidPainel?.plantoes||[]).find(x=>x.id===id);
+  if(!p){ toast('Plantão não encontrado'); return; }
+  window._editPlantaoId=id;
+  aplicarPlantaoHojeUI(p);
+  if(p.ratesByScale) ic24AplicarRatesByScale('plantao', p.ratesByScale, IC24_ESCALAS_PLANTAO);
+  if(p.paymentPreferences) aplicarPaymentPrefsUI(p.paymentPreferences);
+  atualizarResumoTaxaPlantao();
+  show('cuidador-plantao-hoje');
+}
+async function removerAgenda(id){
+  if(!confirm('Remover esta agenda publicada?')) return;
+  const agendas=(window._cuidPainel?.agendas||[]).filter(a=>a.id!==id);
+  const legacy=agendas.length?{...agendas[agendas.length-1]}:null;
+  delete legacy?.id; delete legacy?.createdAt; delete legacy?.updatedAt;
+  await ic24SalvarPainelCuidador({ agendas, ...(legacy?{agenda:legacy}:{}) });
+  toast('Agenda removida');
+  await carregarPainelCuidador();
+  show('cuidador-minhas-agendas');
+}
+async function removerPlantao(id){
+  if(!confirm('Remover este plantão?')) return;
+  const plantoes=(window._cuidPainel?.plantoes||[]).filter(p=>p.id!==id);
+  const ativo=plantoes.find(p=>p.ativo);
+  await ic24SalvarPainelCuidador({
+    plantoes,
+    plantaoHoje: ativo||{ ativo:false },
+    availableToday: !!(ativo&&ativo.ativo),
+  });
+  toast('Plantão removido');
+  await carregarPainelCuidador();
+  show('cuidador-meus-plantoes');
 }
 
 function aplicarAgendaUI(a){
@@ -2097,33 +2496,104 @@ function aplicarAgendaUI(a){
   if(a.dataFim&&document.getElementById('agenda-data-fim')) document.getElementById('agenda-data-fim').value=a.dataFim;
   if(a.horaEntrada&&document.getElementById('agenda-hora-entrada')) document.getElementById('agenda-hora-entrada').value=a.horaEntrada;
   if(a.horaSaida&&document.getElementById('agenda-hora-saida')) document.getElementById('agenda-hora-saida').value=a.horaSaida;
+  if(a.ratesByScale) ic24AplicarRatesByScale('agenda', a.ratesByScale, IC24_ESCALAS_AGENDA);
+  atualizarResumoTaxaAgenda();
 }
 
 function aplicarPlantaoHojeUI(p){
   const chk=document.getElementById('plantao-hoje-ativo');
   if(chk) chk.checked=!!p.ativo;
-  document.getElementById('plantao-hoje-status').textContent='Status: '+(p.ativo?'ativo — visível para famílias próximas':'inativo');
+  if(p.escala) document.querySelectorAll('#plantao-hoje-escala .chip').forEach(c=>{ c.classList.toggle('on',c.getAttribute('data-v')===String(p.escala)); });
+  if(p.inicio) document.querySelectorAll('#plantao-hoje-inicio .chip').forEach(c=>{ c.classList.toggle('on',c.getAttribute('data-v')===p.inicio); });
+  if(p.ratesByScale) ic24AplicarRatesByScale('plantao', p.ratesByScale, IC24_ESCALAS_PLANTAO);
+  const st=document.getElementById('plantao-hoje-status');
+  if(st) st.textContent='Status: '+(p.ativo?'ativo — visível para famílias próximas':'inativo');
+  atualizarResumoTaxaPlantao();
+}
+
+function prefsRecebimentoFrom(prefix){
+  const freq=chipVal(prefix+'-pag-freq')||'diaria';
+  const weekDay=chipVal(prefix+'-pag-dia')||'seg';
+  const dias=parseInt(document.getElementById(prefix+'-duracao-dias')?.value,10)||15;
+  if(!dias||dias<1) throw new Error('Informe a duração em dias');
+  return { paymentSchedule:freq, paymentWeekDay:weekDay, jobDurationDays:dias, configured:true };
+}
+
+function aplicarPaymentPrefsUI(prefs){
+  const freq=prefs.paymentSchedule||'diaria';
+  const weekDay=prefs.paymentWeekDay||'seg';
+  const dias=prefs.jobDurationDays||15;
+  ['plantao','agenda'].forEach(prefix=>{
+    document.querySelectorAll('#'+prefix+'-pag-freq .chip').forEach(c=>{ c.classList.toggle('on',c.getAttribute('data-v')===freq); });
+    document.querySelectorAll('#'+prefix+'-pag-dia .chip').forEach(c=>{ c.classList.toggle('on',c.getAttribute('data-v')===weekDay); });
+    const diasEl=document.getElementById(prefix+'-duracao-dias');
+    if(diasEl) diasEl.value=dias;
+  });
+  togglePlantaoPagSemanal();
+  toggleAgendaPagSemanal();
+}
+
+function togglePlantaoPagSemanal(){
+  const freq=chipVal('plantao-pag-freq')||'diaria';
+  const box=document.getElementById('plantao-pag-dia-semana');
+  if(box) box.style.display=freq==='semanal'?'block':'none';
+}
+
+function toggleAgendaPagSemanal(){
+  const freq=chipVal('agenda-pag-freq')||'diaria';
+  const box=document.getElementById('agenda-pag-dia-semana');
+  if(box) box.style.display=freq==='semanal'?'block':'none';
+}
+
+async function salvarPreferenciasRecebimento(){
+  try{
+    const prefs=prefsRecebimentoFrom('agenda');
+    await ic24SalvarPainelCuidador({ paymentPreferences:prefs });
+    toast('Forma de recebimento salva');
+    await carregarPainelCuidador();
+  }catch(e){ toast(e.message||'Erro ao salvar'); }
 }
 
 async function salvarAgenda(){
+  const escala=chipVal('agenda-escala')||'8';
+  const ratesByScale=ic24ColetarRatesByScale('agenda', IC24_ESCALAS_AGENDA);
+  const dailyRate=ic24RateForScale(ratesByScale, escala, 0);
+  if(!Object.keys(ratesByScale).length){ toast('Informe o valor da diária em pelo menos uma escala (ex.: 8h e 12h)'); return; }
   const agenda={
     periodo:chipVal('agenda-periodo')||'semana',
     dias:diasAgendaSel(),
     inicio:chipVal('agenda-inicio')||'07:00',
-    escala:chipVal('agenda-escala')||'8',
+    escala,
     viagem:!!document.getElementById('agenda-viagem')?.checked,
     raioKm:parseInt(document.getElementById('agenda-raio')?.value||'0',10)||0,
     dataInicio:document.getElementById('agenda-data-inicio')?.value||'',
     dataFim:document.getElementById('agenda-data-fim')?.value||'',
     horaEntrada:document.getElementById('agenda-hora-entrada')?.value||'07:00',
     horaSaida:document.getElementById('agenda-hora-saida')?.value||'19:00',
+    ratesByScale,
+    dailyRate,
     turnosFixos:['07:00','19:00'],
     escalasPermitidas:[4,6,8,12,24,48],
+    active:true,
   };
   if(!agenda.dias.length){ toast('Selecione pelo menos um dia'); return; }
   try{
-    await ic24SalvarPainelCuidador({agenda});
-    toast('Agenda salva — famílias verão sua disponibilidade');
+    const paymentPreferences=prefsRecebimentoFrom('agenda');
+    agenda.paymentPreferences=paymentPreferences;
+    let agendas=[...(window._cuidPainel?.agendas||ic24MigrarAgendasLegacy(window._cuidPainel))];
+    const now=new Date().toISOString();
+    if(window._editAgendaId){
+      agendas=agendas.map(a=>a.id===window._editAgendaId?{...a,...agenda,id:a.id,updatedAt:now}:a);
+    }else{
+      agendas.push({...agenda,id:ic24NewDispId(),createdAt:now});
+    }
+    const legacy={...agenda};
+    delete legacy.id; delete legacy.createdAt; delete legacy.updatedAt;
+    await ic24SalvarPainelCuidador({agendas, agenda:legacy, paymentPreferences, displayDailyRate:dailyRate});
+    window._editAgendaId=null;
+    toast('Agenda publicada!');
+    await carregarPainelCuidador();
+    show('cuidador-minhas-agendas');
   }catch(e){ toast(e.message||'Erro ao salvar agenda'); }
 }
 
@@ -2216,16 +2686,41 @@ async function togglePlantaoHoje(){
 }
 
 async function salvarPlantaoHoje(){
+  const escala=chipVal('plantao-hoje-escala')||'12';
+  const ratesByScale=ic24ColetarRatesByScale('plantao', IC24_ESCALAS_PLANTAO);
+  const dailyRate=ic24RateForScale(ratesByScale, escala, 0);
+  if(!dailyRate){ toast('Informe o valor da diária para a escala '+escala+'h'); return; }
   const plantaoHoje={
     ativo:!!document.getElementById('plantao-hoje-ativo')?.checked,
-    escala:chipVal('plantao-hoje-escala')||'12',
+    escala,
     inicio:chipVal('plantao-hoje-inicio')||'07:00',
+    ratesByScale,
+    dailyRate,
     publicadoEm:new Date().toISOString(),
   };
   try{
-    await ic24SalvarPainelCuidador({plantaoHoje, availableToday:plantaoHoje.ativo});
+    const paymentPreferences=prefsRecebimentoFrom('plantao');
+    plantaoHoje.paymentPreferences=paymentPreferences;
+    let plantoes=[...(window._cuidPainel?.plantoes||ic24MigrarPlantoesLegacy(window._cuidPainel))];
+    const now=new Date().toISOString();
+    if(window._editPlantaoId){
+      plantoes=plantoes.map(p=>p.id===window._editPlantaoId?{...p,...plantaoHoje,id:p.id,updatedAt:now}:p);
+    }else{
+      if(plantaoHoje.ativo) plantoes.forEach(p=>{ p.ativo=false; });
+      plantoes.push({...plantaoHoje,id:ic24NewDispId(),createdAt:now});
+    }
+    await ic24SalvarPainelCuidador({
+      plantoes,
+      plantaoHoje,
+      availableToday:plantaoHoje.ativo,
+      paymentPreferences,
+      displayDailyRate:dailyRate,
+    });
+    window._editPlantaoId=null;
     document.getElementById('plantao-hoje-status').textContent='Status: '+(plantaoHoje.ativo?'ativo — visível para famílias próximas':'inativo');
-    toast(plantaoHoje.ativo?'Plantão de hoje publicado!':'Disponibilidade desativada');
+    toast(plantaoHoje.ativo?'Plantão publicado!':'Plantão salvo (inativo)');
+    await carregarPainelCuidador();
+    show('cuidador-meus-plantoes');
   }catch(e){ toast(e.message||'Erro ao publicar'); }
 }
 
@@ -2280,36 +2775,35 @@ async function copiarCobranca(){
   await ic24CopyText(window._cobCopyText);
   toast('Copiado! Cole no WhatsApp do cliente');
 }
+function fmtStatusCobranca(c){
+  if(c.status==='paid') return 'Recebido';
+  if(c.status==='pending') return 'Aguardando pagamento';
+  if(c.method==='cartao') return 'Link cartão';
+  return 'Cobrança gerada';
+}
+function fmtStatusInvoice(st){
+  if(st==='paid') return 'Pago';
+  if(st==='pending') return 'Aguardando confirmação';
+  if(st==='cancelled') return 'Cancelado';
+  return st||'—';
+}
 async function carregarCobrancasHistorico(){
   const box=document.getElementById('cob-historico');
   if(!box) return;
   try{
     const list=await ic24ListarCobrancasCuidador();
-    box.innerHTML=list.length?list.map(c=>'<div class="list-item"><b>'+fmtMoeda(c.amount)+' · '+(c.method==='pix'?'PIX':'Cartão')+'</b><small>'+escapeHtml(c.description||'')+'</small></div>').join(''):'<p class="hint">Nenhuma cobrança gerada.</p>';
+    box.innerHTML=list.length?list.map(c=>'<div class="list-item"><b>'+fmtMoeda(c.amount)+' · '+fmtStatusCobranca(c)+'</b><small>'+escapeHtml(c.description||'')+'</small></div>').join(''):'<p class="hint">Nenhuma cobrança gerada.</p>';
   }catch(e){ box.innerHTML='<p class="hint">'+escapeHtml(e.message)+'</p>'; }
 }
 async function pagarTaxaPlataforma(){
   try{
-    const metodo=chipVal('taxa-pag-metodo')||'pix';
-    const pay=await ic24PagarTaxaPlataforma(metodo);
-    const box=document.getElementById('taxa-pix-box');
-    if(metodo==='google_play_iap'||metodo==='apple_iap'){
-      toast((metodo==='apple_iap'?'Apple IAP':'Google Play IAP')+' registrado no Firebase — taxa quitada');
-      await carregarPainelCuidador();
-      return;
-    }
-    box.style.display='block';
-    box.innerHTML='<strong>Pague a taxa via PIX: '+fmtMoeda(pay.amount)+'</strong><br/><code style="font-size:11px">'+escapeHtml(pay.pixCopiaCola||'')+'</code><br/><small>Após pagar, toque em Confirmar PIX da taxa pago</small>';
-    toast('PIX da taxa gerado');
-  }catch(e){ toast(e.message||'Erro'); }
-}
-async function confirmarTaxaPix(){
-  try{
-    await ic24ConfirmarTaxaPixPaga();
-    document.getElementById('taxa-pix-box').style.display='none';
+    const d=window._cuidPainel||{};
+    const units=ic24PlatformFeePendingDiarias(d);
+    toast(units>1?'Abrindo App Store ('+units+' compras)…':'Abrindo App Store…');
+    await ic24PagarTaxaPlataforma('apple_iap');
+    toast('Taxa quitada — compra(s) confirmada(s) pela Apple');
     await carregarPainelCuidador();
-    toast('Taxa quitada — ofertas liberadas!');
-  }catch(e){ toast(e.message||'Erro'); }
+  }catch(e){ toast(e.message||'Erro ao pagar taxa'); }
 }
 
 /* ========== PAINEL CONTRATANTE / FAMÍLIA ========== */
@@ -2331,12 +2825,74 @@ async function carregarProximosFamilia(){
   list.innerHTML='<p class="hint">Carregando…</p>';
   try{
     const cgs=await ic24ListarCuidadoresProximos();
-    list.innerHTML=cgs.length?cgs.map(c=>'<div class="list-item"><b>'+escapeHtml(c.fullName||'Cuidador')+'</b><small>'+
+    list.innerHTML=cgs.length?cgs.map(c=>{
+      const foto=c.photoUrl?'<img src="'+escapeHtml(c.photoUrl)+'" alt="" style="width:48px;height:48px;border-radius:50%;object-fit:cover;margin-right:10px;vertical-align:middle"/>':'';
+      return '<div class="list-item"><div style="display:flex;align-items:center">'+foto+'<div><b>'+escapeHtml(c.fullName||'Cuidador')+'</b><small>'+
       escapeHtml((c.city||'')+(c.state?' - '+c.state:''))+' · '+
-      (c.availableToday||c.plantaoHoje?.ativo?'✅ Disponível hoje':'Agenda')+' · R$ '+(c.dailyRate||'—')+'/dia</small>'+
-      '<button class="btn btn-o" type="button" style="margin-top:8px;height:40px" onclick="abrirPerfilCuidador(\''+c.id+'\')">Ver perfil / currículo</button></div>').join(''):
+      (c.availableToday||c.plantaoHoje?.ativo?'✅ Disponível hoje':'Agenda')+' · '+escapeHtml(typeof ic24ExibirRateCaregiver==='function'?ic24ExibirRateCaregiver(c):'—')+'</small></div></div>'+
+      '<button class="btn btn-o" type="button" style="margin-top:8px;height:40px;width:100%" onclick="abrirPerfilCuidadorFamilia(\''+c.id+'\')">Ver perfil</button>'+
+      '<button class="btn btn-o" type="button" style="margin-top:6px;height:40px;width:100%" onclick="abrirCurriculoCuidador(\''+c.id+'\')">Ver currículo</button>'+
+      '<button class="btn btn-p" type="button" style="margin-top:6px;height:40px;width:100%" onclick="abrirPropostaCuidador(\''+c.id+'\',\'familia-proximos\')">Oferecer proposta</button></div>';
+    }).join(''):
       '<p class="hint">Nenhum cuidador com plantão hoje. Peça para ativarem "Oferecer plantão hoje".</p>';
   }catch(e){ list.innerHTML='<p class="hint">'+escapeHtml(e.message)+'</p>'; }
+}
+
+async function abrirPerfilCuidadorFamilia(id){
+  window._cuidadorSelecionado=id;
+  const box=document.getElementById('fam-cuidador-perfil-box');
+  if(!box) return;
+  box.innerHTML='<p class="hint">Carregando…</p>';
+  show('familia-cuidador-perfil');
+  try{
+    const p=await ic24CarregarPerfilCuidadorPublico(id);
+    const foto=p.photoUrl?'<img src="'+escapeHtml(p.photoUrl)+'" alt="" style="width:80px;height:80px;border-radius:50%;object-fit:cover;margin-bottom:12px;display:block"/>':'';
+    const prefs=p.paymentPreferences||{};
+    const rec=prefs.paymentSchedule==='semanal'?'Semanal':prefs.paymentSchedule==='quinzenal'?'Quinzenal':'Diária';
+    box.innerHTML=foto+'<h3 style="margin:0 0 8px">'+escapeHtml(p.fullName)+'</h3>'+
+      '<p class="hint">'+escapeHtml([p.city,p.state].filter(Boolean).join(' - '))+'</p>'+
+      '<p style="font-size:14px">'+escapeHtml(p.bio||'')+'</p>'+
+      '<p><strong>'+escapeHtml(typeof ic24ExibirRateCaregiver==='function'?ic24ExibirRateCaregiver(p):'Consulte agenda/plantão')+'</strong> · Recebimento: '+rec+'</p>'+
+      (p.availableToday?'<p style="color:var(--p)">✓ Disponível hoje</p>':'')+
+      '<button class="btn btn-o" type="button" style="margin-top:12px" onclick="abrirCurriculoCuidador(\''+id+'\')">Ver currículo</button> '+
+      '<button class="btn btn-p" type="button" style="margin-top:12px" onclick="abrirPropostaCuidador(\''+id+'\',\'familia-cuidador-perfil\')">Oferecer proposta</button>';
+  }catch(e){ box.innerHTML='<p class="hint">'+escapeHtml(e.message)+'</p>'; }
+}
+
+async function abrirCurriculoCuidador(id){
+  document.getElementById('pesquisa-cuidador-id').value=id;
+  document.getElementById('fam-curriculo-cuid-id').value=id;
+  try{
+    ic24InitFirebase();
+    if(!ic24Auth.currentUser){ toast('Faça login como família'); irLogin(); return; }
+    const r=await ic24SolicitarCurriculo(id);
+    const fullLink=location.origin+location.pathname.replace(/index\.html?$/,'')+r.link;
+    toast('Currículo liberado');
+    window.open(fullLink,'_blank');
+  }catch(e){ toast(e.message||'Erro ao solicitar currículo'); }
+}
+
+function abrirPropostaCuidador(id, voltar){
+  window._propostaVoltar=voltar||'familia-proximos';
+  document.getElementById('proposta-cuid-id').value=id;
+  document.getElementById('proposta-cuid-nome').textContent='Proposta direta ao cuidador selecionado';
+  show('familia-cuidador-proposta');
+}
+
+async function enviarPropostaCuidador(){
+  const id=document.getElementById('proposta-cuid-id').value;
+  try{
+    await ic24FamiliaProporCuidador(id,{
+      dailyRate:parseFloat(document.getElementById('proposta-valor').value)||0,
+      elderlyType:document.getElementById('proposta-idoso').value.trim(),
+      careNeeds:document.getElementById('proposta-necessidades').value.trim(),
+      durationDays:parseInt(document.getElementById('proposta-duracao').value,10)||15,
+      message:document.getElementById('proposta-msg').value.trim(),
+    });
+    toast('Proposta enviada!');
+    show('familia-ofertas');
+    carregarOfertasFamilia();
+  }catch(e){ toast(e.message||'Erro'); }
 }
 
 function abrirPerfilCuidador(id){
@@ -2365,19 +2921,31 @@ async function publicarOfertaUrgente(){
 
 async function carregarOfertasFamilia(){
   const list=document.getElementById('fam-ofertas-list');
+  const notifBox=document.getElementById('fam-notificacoes-list');
   if(!list) return;
   try{
+    const notifs=await ic24ListarNotificacoesFamilia();
+    if(notifBox){
+      const avisoMulta=typeof ic24HtmlAvisoMultaCancelamento==='function'?ic24HtmlAvisoMultaCancelamento():'';
+      notifBox.innerHTML=notifs.length?notifs.map(n=>'<div class="list-item" style="border-color:var(--p);background:var(--pl)"><b>🔔 '+escapeHtml(n.caregiverName||'Cuidador')+'</b><p style="font-size:14px;margin:8px 0">'+escapeHtml(n.message||'')+'</p>'+
+        '<div class="note" style="font-size:12px;margin:8px 0">'+avisoMulta+'</div>'+
+        '<button class="btn btn-p" type="button" style="height:36px;margin-right:6px" onclick="familiaFecharNegocio(\''+n.responseId+'\',true,\''+n.id+'\')">Fechar negócio</button>'+
+        '<button class="btn btn-g" type="button" style="height:36px;background:#fef2f2;color:var(--err);border:1px solid #fecaca" onclick="familiaFecharNegocio(\''+n.responseId+'\',false,\''+n.id+'\')">Recusar</button></div>').join(''):'';
+    }
     const ofertas=await ic24ListarOfertasFamilia();
     let html='';
     for(const o of ofertas){
       html+=ic24FmtOferta(o);
       const resps=await ic24ListarRespostasOferta(o.id);
       resps.forEach(r=>{
-        html+='<div class="list-item" style="margin-left:12px;border-style:dashed"><b>Proposta cuidador</b><small>'+
-          (r.action==='accept'?'Aceitou':'Contra: R$ '+r.proposedDailyRate)+' · '+escapeHtml(r.message||'')+'</small>';
-        if(r.status==='counter_pending'){
-          html+='<button class="btn btn-p" type="button" style="margin-top:6px;height:36px" onclick="familiaAceitarProposta(\''+r.id+'\',true)">Aceitar</button> ';
-          html+='<button class="btn btn-g" type="button" style="margin-top:6px;height:36px" onclick="familiaAceitarProposta(\''+r.id+'\',false)">Recusar</button>';
+        if(r.status==='awaiting_terms') return;
+        html+='<div class="list-item" style="margin-left:12px;border-style:dashed"><b>'+escapeHtml(r.status==='pending_family'?'Aguardando sua resposta':'Proposta cuidador')+'</b><small>'+
+          (r.action==='counter'?'Contra: R$ '+r.proposedDailyRate:'Aceitou')+
+          (r.scheduleLabel?' · '+escapeHtml(r.scheduleLabel):'')+
+          (r.message?' · '+escapeHtml(r.message):'')+'</small>';
+        if(r.status==='pending_family'){
+          html+='<button class="btn btn-p" type="button" style="margin-top:6px;height:36px" onclick="familiaFecharNegocio(\''+r.id+'\',true)">Fechar negócio</button> ';
+          html+='<button class="btn btn-g" type="button" style="margin-top:6px;height:36px" onclick="familiaFecharNegocio(\''+r.id+'\',false)">Recusar</button>';
         }
         html+='</div>';
       });
@@ -2386,12 +2954,22 @@ async function carregarOfertasFamilia(){
   }catch(e){ list.innerHTML='<p class="hint">'+escapeHtml(e.message)+'</p>'; }
 }
 
-async function familiaAceitarProposta(responseId, accept){
+async function familiaFecharNegocio(responseId, accept, notificationId){
+  if(accept){
+    const ok=confirm('Ao fechar o negócio você concorda com os Termos de Uso (idoso-care-24h.web.app/termos.html). Multa de cancelamento: 7%. Continuar?');
+    if(!ok) return;
+    window.open('https://idoso-care-24h.web.app/termos.html','_blank','noopener');
+  }
   try{
-    await ic24FamiliaAceitarContraProposta(responseId, accept);
-    toast(accept?'Proposta aceita — plantão confirmado!':'Proposta recusada');
+    await ic24FamiliaAceitarContraProposta(responseId, accept, notificationId||null);
+    toast(accept?'Negócio fechado — chat liberado!':'Proposta recusada');
+    if(accept) await abrirChatNegocio();
     carregarOfertasFamilia();
   }catch(e){ toast(e.message||'Erro'); }
+}
+
+async function familiaAceitarProposta(responseId, accept){
+  return familiaFecharNegocio(responseId, accept, null);
 }
 
 async function carregarPontoFamilia(){
@@ -2443,7 +3021,7 @@ async function carregarPagamentosFamilia(){
     const hist=await ic24ListarCuidadosAnteriores();
     if(h) h.innerHTML=hist.length?hist.map(o=>'<div class="list-item"><b>'+escapeHtml(o.title||'Plantão')+'</b><small>Concluído · R$ '+escapeHtml(o.dailyRate||'—')+'</small></div>').join(''):'<p class="hint">Nenhum cuidado concluído ainda.</p>';
     const pays=await ic24ListarPagamentosFamilia();
-    if(p) p.innerHTML=pays.length?pays.map(x=>'<div class="list-item"><b>PIX R$ '+escapeHtml(x.amount||'0')+'</b><small>'+escapeHtml(x.status||'')+'</small></div>').join(''):'<p class="hint">Nenhum pagamento registrado.</p>';
+    if(p) p.innerHTML=pays.length?pays.map(x=>'<div class="list-item"><b>'+fmtMoeda(x.amount)+' · '+fmtStatusInvoice(x.status)+'</b><small>'+escapeHtml(x.description||'Diária/plantão')+'</small></div>').join(''):'<p class="hint">Nenhuma cobrança registrada.</p>';
   }catch(e){ if(h) h.innerHTML='<p class="hint">'+escapeHtml(e.message)+'</p>'; }
 }
 
@@ -2502,6 +3080,49 @@ async function enviarFaleConosco(){
   }catch(e){ toast(e.message||'Erro'); }
 }
 
+window._contaVoltar='familia-painel';
+function abrirExclusaoConta(voltar){
+  window._contaVoltar=voltar||'familia-painel';
+  const senha=document.getElementById('excluir-senha');
+  const chk=document.getElementById('excluir-confirm');
+  if(senha) senha.value='';
+  if(chk) chk.checked=false;
+  atualizarBtnExcluir();
+  show('conta-excluir');
+}
+function atualizarBtnExcluir(){
+  const ok=!!document.getElementById('excluir-confirm')?.checked;
+  const btn=document.getElementById('btnExcluirConta');
+  if(btn) btn.disabled=!ok;
+}
+async function confirmarExcluirConta(){
+  const senha=document.getElementById('excluir-senha')?.value||'';
+  const btn=document.getElementById('btnExcluirConta');
+  if(btn) btn.disabled=true;
+  try{
+    await ic24ExcluirConta(senha);
+    toast('Conta apagada permanentemente');
+    show('welcome');
+  }catch(e){
+    toast(e.message||'Não foi possível apagar a conta');
+    if(btn) btn.disabled=!document.getElementById('excluir-confirm')?.checked;
+  }
+}
+async function sairConta(){
+  try{
+    await ic24SairConta();
+    toast('Sessão encerrada');
+    show('welcome');
+  }catch(e){ toast(e.message||'Erro ao sair'); }
+}
+async function esqueciSenha(){
+  const email=document.getElementById('email')?.value?.trim();
+  try{
+    await ic24RecuperarSenha(email);
+    toast('Link de recuperação enviado ao e-mail');
+  }catch(e){ toast(e.message||'Erro ao enviar e-mail'); }
+}
+
 const _famShowOrig=show;
 show=function(id){
   _famShowOrig(id);
@@ -2510,16 +3131,23 @@ show=function(id){
   if(id==='familia-ponto') carregarPontoFamilia();
   if(id==='familia-diario') carregarDiarioFamilia();
   if(id==='familia-pagamentos') carregarPagamentosFamilia();
+  if(id==='cuidador-agenda') atualizarResumoTaxaAgenda();
+  if(id==='cuidador-plantao-hoje') atualizarResumoTaxaPlantao();
+  if(id==='cuidador-minhas-agendas') renderListasAgendaPlantao();
+  if(id==='cuidador-meus-plantoes') renderListasAgendaPlantao();
+  if(id==='cuidador-etapa3'){ /* sem valores no cadastro */ }
   if(id==='cuidador-ofertas'){ renderOfertas(); renderOfertasTaxaBloqueio(window._cuidPainel||{}); }
   if(id==='cuidador-faturamento') carregarCobrancasHistorico();
   if(id==='cuidador-curriculo'&&!window._curriculoBaixadoOnce){
     window._curriculoBaixadoOnce=true;
     setTimeout(()=>{ toast('Toque em Baixar meu cadastro para salvar o currículo'); },400);
   }
-  if(id==='cuidador-taxa') renderTaxa(window._cuidPainel||{});
+  if(id==='cuidador-taxa'){ renderTaxa(window._cuidPainel||{}); carregarHistoricoTaxa(); }
 };
 document.addEventListener('click',e=>{
   if(e.target.closest('#cob-metodo .chip')){ /* método atualizado via chipVal */ }
+  if(e.target.closest('#agenda-escala .chip')) setTimeout(atualizarResumoTaxaAgenda,0);
+  if(e.target.closest('#plantao-hoje-escala .chip')) setTimeout(atualizarResumoTaxaPlantao,0);
 });
 try{
   ic24InitFirebase();

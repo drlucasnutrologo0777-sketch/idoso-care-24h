@@ -7,8 +7,14 @@ grep -q 'WebAppScreen' lib/main.dart || { echo "ERRO: lib/main.dart nao usa WebA
 grep -q 'OnboardingGate' lib/main.dart && { echo "ERRO: main.dart ainda referencia OnboardingGate (app antigo)"; exit 1; } || true
 grep -q 'HomeShell' lib/main.dart && { echo "ERRO: main.dart ainda referencia HomeShell (app antigo)"; exit 1; } || true
 test -f web_app/index.html || { echo "ERRO: web_app/index.html ausente"; exit 1; }
-grep -q 'Build 36 · Web' web_app/index.html || { echo "ERRO: badge Build 36 ausente em web_app/index.html"; exit 1; }
-echo "OK: fonte aponta para WebAppScreen + web_app/"
+grep -q 'ic24AvaliarDocumentacaoCuidador' web_app/firebase-ic24.js || { echo "ERRO: firebase-ic24.js sem avaliacao de documentacao separada"; exit 1; }
+grep -q 'basicSignupComplete' web_app/index.html || { echo "ERRO: cadastro cuidador sem basicSignupComplete"; exit 1; }
+grep -q 'web_v54' lib/services/web_app_bundle.dart || { echo "ERRO: web_app_bundle stamp nao e web_v54"; exit 1; }
+grep -q 'Build 54' lib/screens/web_app_screen.dart || { echo "ERRO: WebAppScreen nao aponta build 54"; exit 1; }
+test -f web_app/favicon.png || { echo "ERRO: web_app/favicon.png ausente"; exit 1; }
+test -f web_app/logo.png || { echo "ERRO: web_app/logo.png ausente"; exit 1; }
+grep -q 'ic24NormalizeUploadFile' web_app/ic24-curriculo.js || { echo "ERRO: HEIC normalize ausente em ic24-curriculo.js"; exit 1; }
+echo "OK: fonte aponta para WebAppScreen + web_app/ build 54"
 
 if [ "${1:-}" = "--ipa" ]; then
   IPA="${2:-}"
@@ -29,5 +35,9 @@ if [ "${1:-}" = "--ipa" ]; then
   }
   BUILD_NUM=$(unzip -p "$IPA" 'Payload/Runner.app/Info.plist' | plutil -extract CFBundleVersion raw - 2>/dev/null || true)
   echo "CFBundleVersion no IPA: ${BUILD_NUM:-desconhecido}"
+  if [ "${BUILD_NUM:-}" != "54" ]; then
+    echo "ERRO: CFBundleVersion esperado 54, obtido ${BUILD_NUM:-vazio}"
+    exit 1
+  fi
   echo "OK: IPA contem web_app/index.html (Flutter usa AssetManifest.bin, nao .json)"
 fi

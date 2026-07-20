@@ -1,4 +1,4 @@
-# IDOSO CARE 24H — iOS TestFlight (app WEB via WebView, build 36+)
+# IDOSO CARE 24H — iOS TestFlight (app WEB via WebView, build 54+)
 # Repo: https://github.com/drlucasnutrologo0777-sketch/idoso-care-24h
 
 workflows:
@@ -64,7 +64,7 @@ workflows:
           /usr/libexec/PlistBuddy -c "Set :provisioningProfiles:com.idosocare24h.app $UUID" ios/codemagic_signing/ExportOptions.plist
           flutter build ipa --release \
             --build-name=2.0.0 \
-            --build-number=36 \
+            --build-number=54 \
             --export-options-plist=ios/codemagic_signing/ExportOptions.plist
           ls -la build/ios/ipa/
           IPA_CHECK=$(find build/ios/ipa -name "*.ipa" | head -1)
