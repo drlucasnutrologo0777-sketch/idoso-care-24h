@@ -1,4 +1,4 @@
-# IDOSO CARE 24H — iOS TestFlight (app WEB via WebView, build 54+)
+# IDOSO CARE 24H — iOS TestFlight (app WEB via WebView, build 55+)
 # Repo: https://github.com/drlucasnutrologo0777-sketch/idoso-care-24h
 
 workflows:
@@ -58,13 +58,21 @@ workflows:
       - name: Build IPA
         script: |
           set -e
+          BUILD_LINE=$(grep '^version:' pubspec.yaml)
+          BUILD_NAME=$(echo "$BUILD_LINE" | sed -E 's/version: ([0-9.]+)\+.*/\1/')
+          BUILD_NUMBER=$(echo "$BUILD_LINE" | sed -E 's/version: .*\+([0-9]+)/\1/')
+          echo "pubspec.yaml => build-name=$BUILD_NAME build-number=$BUILD_NUMBER"
+          if [ -z "$BUILD_NUMBER" ] || [ "$BUILD_NUMBER" -le 53 ]; then
+            echo "ERRO: CFBundleVersion deve ser > 53 (ultimo upload TestFlight). Atualize pubspec.yaml."
+            exit 1
+          fi
           xcode-project use-profiles --project ios/Runner.xcodeproj
           PROFILE=$(find "$HOME/Library/MobileDevice/Provisioning Profiles" -name "*.mobileprovision" | head -1)
           UUID=$(security cms -D -i "$PROFILE" | plutil -extract UUID raw -)
           /usr/libexec/PlistBuddy -c "Set :provisioningProfiles:com.idosocare24h.app $UUID" ios/codemagic_signing/ExportOptions.plist
           flutter build ipa --release \
-            --build-name=2.0.0 \
-            --build-number=54 \
+            --build-name="$BUILD_NAME" \
+            --build-number="$BUILD_NUMBER" \
             --export-options-plist=ios/codemagic_signing/ExportOptions.plist
           ls -la build/ios/ipa/
           IPA_CHECK=$(find build/ios/ipa -name "*.ipa" | head -1)
