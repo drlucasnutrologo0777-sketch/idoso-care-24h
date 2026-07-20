@@ -18,7 +18,7 @@ workflows:
         BUNDLE_ID: com.idosocare24h.app
         CM_CERTIFICATE_PASSWORD: TrocaCopa2026
         IC24_BUILD_NAME: "2.0.0"
-        IC24_BUILD_NUMBER: "57"
+        IC24_BUILD_NUMBER: "58"
       flutter: stable
       xcode: latest
       cocoapods: default

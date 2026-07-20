@@ -7,7 +7,7 @@ import '../services/web_app_bundle.dart';
 class WebAppScreen extends StatefulWidget {
   const WebAppScreen({super.key});
 
-  static const buildLabel = 'Build 57 · Web App';
+  static const buildLabel = 'Build 58 · Web App';
 
   @override
   State<WebAppScreen> createState() => _WebAppScreenState();
@@ -36,12 +36,12 @@ class _WebAppScreenState extends State<WebAppScreen> {
       try {
         server = InAppLocalhostServer(documentRoot: root.path, port: 8080);
         await server.start();
-        url = WebUri('http://127.0.0.1:${server.port}/index.html?v=57');
+        url = WebUri('http://127.0.0.1:${server.port}/index.html?v=58');
       } catch (_) {
         server?.close();
         server = InAppLocalhostServer(documentRoot: root.path, port: 0);
         await server.start();
-        url = WebUri('http://127.0.0.1:${server.port}/index.html?v=57');
+        url = WebUri('http://127.0.0.1:${server.port}/index.html?v=58');
       }
 
       if (!server.isRunning()) {
