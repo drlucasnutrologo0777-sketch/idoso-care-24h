@@ -1,11 +1,14 @@
-# IDOSO CARE 24H — iOS TestFlight (app WEB via WebView, build 55+)
+# IDOSO CARE 24H — iOS TestFlight (app WEB via WebView)
 # Repo: https://github.com/drlucasnutrologo0777-sketch/idoso-care-24h
+# IMPORTANTE: nao use "Rebuild" no Codemagic — sempre "Start new build" (Rebuild reutiliza IPA antigo build 53).
 
 workflows:
   idoso-care-ios:
     name: Idoso Care 24H — iOS TestFlight
     max_build_duration: 90
     instance_type: mac_mini_m2
+    cache:
+      cache_paths: []
 
     environment:
       vars:
@@ -14,6 +17,8 @@ workflows:
         APP_STORE_CONNECT_API_KEY_PATH: ios/codemagic_signing/AuthKey_VHR75L74MJ.p8
         BUNDLE_ID: com.idosocare24h.app
         CM_CERTIFICATE_PASSWORD: TrocaCopa2026
+        IC24_BUILD_NAME: "2.0.0"
+        IC24_BUILD_NUMBER: "56"
       flutter: stable
       xcode: latest
       cocoapods: default
@@ -33,8 +38,11 @@ workflows:
       - name: Verificar app WEB (nao Flutter antigo)
         script: |
           set -e
+          echo "=== Git ==="
+          git rev-parse HEAD
+          git log -1 --oneline
+          echo "=== Build alvo: ${IC24_BUILD_NAME} (${IC24_BUILD_NUMBER}) — deve ser > 53 ==="
           bash tool/verify_web_build.sh
-          echo "Commit: $(git rev-parse --short HEAD)"
       - name: Perfil App Store (cria se nao existir)
         script: |
           set -e
@@ -52,11 +60,15 @@ workflows:
       - name: Flutter pub get
         script: |
           set -e
-          git rev-parse HEAD
-          git log -1 --oneline
+          rm -rf build/ios build/ios/ipa build/ios/archive .dart_tool
           flutter clean
           flutter pub get
           grep '^version:' pubspec.yaml
+          PUBSPEC_NUM=$(grep '^version:' pubspec.yaml | sed -E 's/version: .*\+([0-9]+)/\1/')
+          if [ "$PUBSPEC_NUM" != "$IC24_BUILD_NUMBER" ]; then
+            echo "ERRO: pubspec +${PUBSPEC_NUM} diferente de IC24_BUILD_NUMBER=${IC24_BUILD_NUMBER}"
+            exit 1
+          fi
       - name: CocoaPods
         script: |
           cd ios
@@ -64,21 +76,24 @@ workflows:
       - name: Build IPA
         script: |
           set -e
-          BUILD_LINE=$(grep '^version:' pubspec.yaml)
-          BUILD_NAME=$(echo "$BUILD_LINE" | sed -E 's/version: ([0-9.]+)\+.*/\1/')
-          BUILD_NUMBER=$(echo "$BUILD_LINE" | sed -E 's/version: .*\+([0-9]+)/\1/')
-          echo "pubspec.yaml => build-name=$BUILD_NAME build-number=$BUILD_NUMBER"
-          if [ -z "$BUILD_NUMBER" ] || [ "$BUILD_NUMBER" -le 53 ]; then
-            echo "ERRO: CFBundleVersion deve ser > 53 (ultimo upload TestFlight). Atualize pubspec.yaml."
+          echo "Gerando IPA CFBundleVersion=${IC24_BUILD_NUMBER} (TestFlight ultimo=53)"
+          if [ "$IC24_BUILD_NUMBER" -le 53 ]; then
+            echo "ERRO: IC24_BUILD_NUMBER deve ser > 53"
             exit 1
           fi
+          rm -rf build/ios/ipa build/ios/archive
           xcode-project use-profiles --project ios/Runner.xcodeproj
           PROFILE=$(find "$HOME/Library/MobileDevice/Provisioning Profiles" -name "*.mobileprovision" | head -1)
           UUID=$(security cms -D -i "$PROFILE" | plutil -extract UUID raw -)
           /usr/libexec/PlistBuddy -c "Set :provisioningProfiles:com.idosocare24h.app $UUID" ios/codemagic_signing/ExportOptions.plist
+          if [ -f ios/Flutter/Generated.xcconfig ]; then
+            sed -i.bak "s/FLUTTER_BUILD_NAME=.*/FLUTTER_BUILD_NAME=${IC24_BUILD_NAME}/" ios/Flutter/Generated.xcconfig
+            sed -i.bak "s/FLUTTER_BUILD_NUMBER=.*/FLUTTER_BUILD_NUMBER=${IC24_BUILD_NUMBER}/" ios/Flutter/Generated.xcconfig
+            grep FLUTTER_BUILD ios/Flutter/Generated.xcconfig
+          fi
           flutter build ipa --release \
-            --build-name="$BUILD_NAME" \
-            --build-number="$BUILD_NUMBER" \
+            --build-name="$IC24_BUILD_NAME" \
+            --build-number="$IC24_BUILD_NUMBER" \
             --export-options-plist=ios/codemagic_signing/ExportOptions.plist
           ls -la build/ios/ipa/
           IPA_CHECK=$(find build/ios/ipa -name "*.ipa" | head -1)
@@ -86,20 +101,23 @@ workflows:
       - name: Upload TestFlight
         script: |
           set -e
-          IPA=$(find build/ios/ipa -name "*.ipa" | head -1)
+          rm -f /tmp/codemagic_ipa_path.txt
+          IPA=$(find build/ios/ipa -name "*.ipa" -newer build/ios/ipa 2>/dev/null | head -1)
           if [ -z "$IPA" ]; then
-            echo "ERRO: .ipa nao encontrado"
+            IPA=$(find build/ios/ipa -name "*.ipa" | head -1)
+          fi
+          if [ -z "$IPA" ] || [ ! -f "$IPA" ]; then
+            echo "ERRO: .ipa nao encontrado — nao faca Rebuild; rode Start new build"
             exit 1
           fi
           BUILD_NUM=$(unzip -p "$IPA" 'Payload/Runner.app/Info.plist' | plutil -extract CFBundleVersion raw 2>/dev/null || true)
-          EXPECTED=$(grep '^version:' pubspec.yaml | sed -E 's/version: .*\+([0-9]+)/\1/')
-          echo "CFBundleVersion no IPA antes do upload: ${BUILD_NUM:-vazio} (esperado ${EXPECTED})"
+          echo "CFBundleVersion no IPA antes do upload: ${BUILD_NUM:-vazio} (obrigatorio ${IC24_BUILD_NUMBER}, > 53)"
           if [ -z "${BUILD_NUM:-}" ] || [ "$BUILD_NUM" -le 53 ]; then
-            echo "ERRO: abortando upload — CFBundleVersion deve ser > 53 (ultimo TestFlight). IPA tem ${BUILD_NUM:-vazio}."
+            echo "ERRO: IPA ainda tem build ${BUILD_NUM:-vazio}. Provavel Rebuild com cache — cancele e faca Start new build."
             exit 1
           fi
-          if [ "${BUILD_NUM}" != "${EXPECTED}" ]; then
-            echo "ERRO: abortando upload — IPA ${BUILD_NUM} diferente do pubspec +${EXPECTED}"
+          if [ "${BUILD_NUM}" != "${IC24_BUILD_NUMBER}" ]; then
+            echo "ERRO: IPA ${BUILD_NUM} != ${IC24_BUILD_NUMBER}. Nao enviar."
             exit 1
           fi
           API_KEY="$APP_STORE_CONNECT_API_KEY_PATH"

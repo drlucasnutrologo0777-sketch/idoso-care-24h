@@ -3,11 +3,11 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import '../services/web_app_bundle.dart';
 
-/// Protótipo web completo (mesmo conteúdo do serve_web.py / TestFlight build 55+).
+/// Protótipo web completo (mesmo conteúdo do serve_web.py / TestFlight build 56+).
 class WebAppScreen extends StatefulWidget {
   const WebAppScreen({super.key});
 
-  static const buildLabel = 'Build 55 · Web App';
+  static const buildLabel = 'Build 56 · Web App';
 
   @override
   State<WebAppScreen> createState() => _WebAppScreenState();
@@ -36,12 +36,12 @@ class _WebAppScreenState extends State<WebAppScreen> {
       try {
         server = InAppLocalhostServer(documentRoot: root.path, port: 8080);
         await server.start();
-        url = WebUri('http://127.0.0.1:${server.port}/index.html?v=55');
+        url = WebUri('http://127.0.0.1:${server.port}/index.html?v=56');
       } catch (_) {
         server?.close();
         server = InAppLocalhostServer(documentRoot: root.path, port: 0);
         await server.start();
-        url = WebUri('http://127.0.0.1:${server.port}/index.html?v=55');
+        url = WebUri('http://127.0.0.1:${server.port}/index.html?v=56');
       }
 
       if (!server.isRunning()) {
@@ -73,7 +73,7 @@ class _WebAppScreenState extends State<WebAppScreen> {
             'App web não carregou.\n\n$_error\n\n'
             'Se vir barra inferior Cadastro/Chat/Perfil ou título '
             '"Cadastro Cuidador (1/3)", você instalou o app Flutter ANTIGO '
-            '(repo idoso-care-24h). Apague o app e instale o build 55 do repo troca-copa-2026.',
+            '(repo idoso-care-24h). Apague o app e instale o build 56 do repo troca-copa-2026.',
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 15, height: 1.45),
           ),
