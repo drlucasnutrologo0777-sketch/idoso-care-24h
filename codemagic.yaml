@@ -50,7 +50,13 @@ workflows:
             --verbose
           xcode-project use-profiles --project ios/Runner.xcodeproj
       - name: Flutter pub get
-        script: flutter pub get
+        script: |
+          set -e
+          git rev-parse HEAD
+          git log -1 --oneline
+          flutter clean
+          flutter pub get
+          grep '^version:' pubspec.yaml
       - name: CocoaPods
         script: |
           cd ios
@@ -85,16 +91,27 @@ workflows:
             echo "ERRO: .ipa nao encontrado"
             exit 1
           fi
+          BUILD_NUM=$(unzip -p "$IPA" 'Payload/Runner.app/Info.plist' | plutil -extract CFBundleVersion raw 2>/dev/null || true)
+          EXPECTED=$(grep '^version:' pubspec.yaml | sed -E 's/version: .*\+([0-9]+)/\1/')
+          echo "CFBundleVersion no IPA antes do upload: ${BUILD_NUM:-vazio} (esperado ${EXPECTED})"
+          if [ -z "${BUILD_NUM:-}" ] || [ "$BUILD_NUM" -le 53 ]; then
+            echo "ERRO: abortando upload — CFBundleVersion deve ser > 53 (ultimo TestFlight). IPA tem ${BUILD_NUM:-vazio}."
+            exit 1
+          fi
+          if [ "${BUILD_NUM}" != "${EXPECTED}" ]; then
+            echo "ERRO: abortando upload — IPA ${BUILD_NUM} diferente do pubspec +${EXPECTED}"
+            exit 1
+          fi
           API_KEY="$APP_STORE_CONNECT_API_KEY_PATH"
           export APP_STORE_CONNECT_PRIVATE_KEY="$(cat "$API_KEY")"
-          echo "Enviando para App Store Connect: $IPA"
+          echo "Enviando build ${BUILD_NUM} para App Store Connect: $IPA"
           app-store-connect publish \
             --path "$IPA" \
             --private-key "@file:$API_KEY" \
             --max-find-build-wait 900 \
             --max-build-processing-wait 3600 \
             --verbose
-          echo "Upload concluido. Abra TestFlight no App Store Connect."
+          echo "Upload concluido (build ${BUILD_NUM}). Abra TestFlight no App Store Connect."
 
     artifacts:
       - build/ios/ipa/*.ipa
